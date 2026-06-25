@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <%=msg%>
-    <h1>Hello, <%=name%></h1>
+    <%= typeof msg !== 'undefined' ? msg : '' %>
+    <h1>Hello, <%= typeof name !== 'undefined' ? name : 'guest' %></h1>
 </body>
 </html>
