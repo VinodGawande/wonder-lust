@@ -58,7 +58,14 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(async (username, done) => {
+    try {
+        const user = await User.findByUsername(username);
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
+});
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
