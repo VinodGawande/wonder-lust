@@ -16,17 +16,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet">
-  
-        <link rel="stylesheet" href="/css/rating.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/rating.css" rel="stylesheet">
+
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.25.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.25.0/mapbox-gl.js"></script>
+
 </head>
+
+
 
 <body>
     <%- include('../includes/navbar.ejs')%>
 
-        <div class="container"> 
-              <%- include('../includes/flash.ejs')%>
-            <%-body%> 
-          </div>
+        <div class="container">
+            <%- include('../includes/flash.ejs')%>
+                <%-body%>
+        </div>
 
         <%- include('../includes/footer.ejs')%>
 
@@ -34,12 +40,7 @@
                 integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
                 crossorigin="anonymous"></script>
 
-                <script src="/js/script.js"> </script>
+            <script src="/js/script.js"> </script>
 </body>
 
 </html>
-
-
-
-
- 
