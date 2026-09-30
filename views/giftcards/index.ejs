@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WonderLust Gift Cards | More than a Gift, A New Story</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            handwriting: ['"Caveat"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-[#f6f5f3] font-sans text-slate-800 antialiased selection:bg-[#ff4757]/20 selection:text-[#ff4757]">
+
+  <!-- Top Glass Navbar -->
+  <%- include("../partials/navbar.ejs", { activeTab: "gift-cards" }) %>
+
+  <!-- Top Floating Purchase Success Notification -->
+  <div id="successToast" class="fixed top-24 left-1/2 -translate-x-1/2 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toastMsgText">Gift Card generated successfully!</span>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-16">
+    
+    <!-- 1. HERO SECTION -->
+    <section class="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#fbf8f5] via-[#f5ede6] to-[#eddcd2] p-8 sm:p-12 lg:p-14 overflow-hidden border border-white/80 shadow-sm min-h-[580px] flex flex-col justify-between">
+      
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-white/60 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 right-1/4 w-96 h-96 bg-rose-200/40 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Quick Nav Vertical Shortcuts -->
+      <div class="hidden xl:flex flex-col gap-2.5 absolute top-12 right-12 z-30">
+        <a href="/listings" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-sm border border-slate-200/60 text-xs font-semibold backdrop-blur-sm transition-all text-decoration-none">
+          <i class="fa-solid fa-house text-[#ff4757] text-[11px]"></i>
+          <span>Stays</span>
+        </a>
+        <a href="/experiences" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-sm border border-slate-200/60 text-xs font-semibold backdrop-blur-sm transition-all text-decoration-none">
+          <i class="fa-solid fa-compass text-[#ff4757] text-[11px]"></i>
+          <span>Experiences</span>
+        </a>
+        <a href="/destinations" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-sm border border-slate-200/60 text-xs font-semibold backdrop-blur-sm transition-all text-decoration-none">
+          <i class="fa-solid fa-location-dot text-[#ff4757] text-[11px]"></i>
+          <span>Destinations</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-20">
+        
+        <div class="lg:col-span-6 space-y-6">
+          <span class="inline-block text-[11px] font-bold uppercase tracking-[0.35em] text-slate-500">
+            GIVE THE WORLD
+          </span>
+
+          <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.08]">
+            More than a Gift,<br>
+            <span class="font-serif italic font-normal text-[#ff4757]">A New Story</span>
+          </h1>
+
+          <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed max-w-md">
+            Give the gift of unforgettable stays, unique experiences and incredible destinations. Let them explore, create memories, and live their travel dreams.
+          </p>
+
+          <div class="flex items-center gap-3">
+            <a href="#giftCustomizer" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] via-[#ff5252] to-[#ff6b81] hover:brightness-105 active:scale-95 shadow-lg shadow-[#ff4757]/30 transition-all text-decoration-none">
+              <span>Buy a Gift Card</span>
+              <i class="fa-solid fa-arrow-right text-[11px]"></i>
+            </a>
+
+            <!-- Check Balance Trigger Button -->
+            <button type="button" id="openBalanceBtn" class="px-5 py-3.5 rounded-full text-xs font-bold bg-white/90 hover:bg-white text-slate-700 border border-slate-200/80 shadow-sm transition-all active:scale-95">
+              Check Balance
+            </button>
+          </div>
+
+          <!-- Value Props -->
+          <div class="pt-6 border-t border-slate-300/40 grid grid-cols-3 gap-3 text-left">
+            <div class="flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-xl bg-white/90 text-[#ff4757] flex items-center justify-center text-xs shrink-0 shadow-sm">
+                <i class="fa-solid fa-gift"></i>
+              </div>
+              <div>
+                <h6 class="text-[11px] font-extrabold text-slate-900 leading-tight">Instant Delivery</h6>
+                <span class="text-[9px] text-slate-500 mt-0.5 block leading-snug">Send via email in minutes</span>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-xl bg-white/90 text-amber-500 flex items-center justify-center text-xs shrink-0 shadow-sm">
+                <i class="fa-regular fa-star"></i>
+              </div>
+              <div>
+                <h6 class="text-[11px] font-extrabold text-slate-900 leading-tight">Valid Worldwide</h6>
+                <span class="text-[9px] text-slate-500 mt-0.5 block leading-snug">Use for stays, experiences and more</span>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-2.5">
+              <div class="w-7 h-7 rounded-xl bg-white/90 text-rose-500 flex items-center justify-center text-xs shrink-0 shadow-sm">
+                <i class="fa-regular fa-heart"></i>
+              </div>
+              <div>
+                <h6 class="text-[11px] font-extrabold text-slate-900 leading-tight">No Expiry</h6>
+                <span class="text-[9px] text-slate-500 mt-0.5 block leading-snug">Valid for a lifetime</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Gift Box Visual -->
+        <div class="lg:col-span-6 relative flex items-center justify-center min-h-[380px]">
+          <div class="absolute top-2 left-6 sm:left-12 z-30 font-handwriting text-2xl text-slate-800 rotate-[-8deg] flex items-center gap-1.5">
+            <span>Gift<br>The Adventure</span>
+            <span class="text-[#ff4757] text-lg">♥</span>
+          </div>
+
+          <div class="relative w-full max-w-[460px] aspect-[4/3] flex items-center justify-center">
+            <div class="relative w-72 h-44 bg-white/90 rounded-2xl shadow-2xl border border-white p-4 flex flex-col justify-end transform rotate-[-4deg] translate-y-12">
+              <div class="w-full h-2 bg-gradient-to-r from-red-600 via-[#ff4757] to-red-600 rounded-full mb-3"></div>
+              <div class="flex items-center justify-between text-[10px] text-slate-400 font-semibold px-2">
+                <span>WonderLust Exclusive</span>
+                <span id="previewCardCode">Serial #WL-READY</span>
+              </div>
+            </div>
+
+            <!-- Santorini Pop-up Floating Card -->
+            <div class="absolute -top-2 w-80 sm:w-96 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-2 border-white transform rotate-[8deg] hover:rotate-0 transition-transform duration-500 z-20">
+              <div class="relative aspect-[16/10] w-full">
+                <img 
+                  src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=85" 
+                  alt="WonderLust Santorini Card" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30"></div>
+                
+                <div class="absolute top-3 left-3 flex items-center gap-1.5 text-white">
+                  <div class="w-4 h-4 rounded-full border border-white flex items-center justify-center text-[9px]">✹</div>
+                  <span class="text-xs font-bold tracking-tight">Wonder<span class="text-[#ff6b81]">Lust</span></span>
+                </div>
+
+                <div class="absolute bottom-4 left-4 text-white">
+                  <p class="font-serif italic text-xl sm:text-2xl leading-tight">Discover<br>Explore<br>Belong</p>
+                  <span id="heroCardAmtTag" class="text-xs font-bold bg-[#ff4757] text-white px-3 py-1 rounded-full mt-2 inline-block">Value: ₹2,500</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute -bottom-2 right-4 bg-white p-3 rounded-xl shadow-lg border border-slate-100 text-[10px] transform rotate-12 z-20">
+              <span class="text-slate-400 uppercase font-bold tracking-wider block text-[8px]">Good Places</span>
+              <span class="text-slate-800 font-extrabold">Good People</span>
+              <span class="text-[#ff4757] block text-right mt-1">❤</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. INTERACTIVE BUILDER CAPSULE -->
+    <div id="giftCustomizer" class="w-full my-8">
+      <div class="bg-white rounded-3xl sm:rounded-full border border-slate-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.04)] p-3 sm:px-6 sm:py-3 flex flex-col lg:flex-row items-center justify-between gap-4">
+        
+        <div class="flex items-center gap-3 w-full lg:w-auto">
+          <div class="w-8 h-8 rounded-full bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs shrink-0">
+            <i class="fa-solid fa-gift"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-slate-800 block leading-tight">Choose Amount</span>
+            <span class="text-[10px] text-slate-400 leading-tight">Or select a custom amount</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar w-full lg:w-auto justify-between sm:justify-start">
+          <button type="button" data-val="1000" class="amt-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-all">
+            ₹1,000
+          </button>
+          <button type="button" data-val="2500" class="amt-btn px-4 py-1.5 rounded-full text-xs font-bold border border-[#ff4757] bg-rose-50 text-[#ff4757] shadow-sm transition-all">
+            ₹2,500
+          </button>
+          <button type="button" data-val="5000" class="amt-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-all">
+            ₹5,000
+          </button>
+          <button type="button" data-val="10000" class="amt-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-all">
+            ₹10,000
+          </button>
+          <button type="button" id="customAmtBtn" class="amt-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-all">
+            Custom
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-end">
+          <button type="button" id="openMsgModal" class="flex items-center gap-2 text-left hover:opacity-80 transition-opacity">
+            <div class="w-7 h-7 rounded-full bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs shrink-0">
+              <i class="fa-solid fa-pencil"></i>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-slate-800 block leading-tight">Personalize Your Gift</span>
+              <span id="msgSubtext" class="text-[10px] text-slate-400 block leading-tight">Add a message and make it special</span>
+            </div>
+          </button>
+
+          <button type="button" id="continueCheckoutBtn" class="px-7 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] to-[#ff6b81] hover:brightness-105 active:scale-95 shadow-md shadow-[#ff4757]/30 transition-all">
+            Continue →
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. OCCASIONS GRID (6 Cards with Click to Pre-select) -->
+    <section class="w-full my-12">
+      <div class="flex items-end justify-between mb-6">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Perfect for Every Occasion</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">Because every journey deserves a reason.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <% 
+          const occasions = [
+            { name: "Birthday", subtitle: "Give them a trip worth celebrating", img: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=400&q=80" },
+            { name: "Anniversary", subtitle: "For more journeys together", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400&q=80" },
+            { name: "Honeymoon", subtitle: "A new chapter in a new destination", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" },
+            { name: "Congratulations", subtitle: "Celebrate their next big adventure", img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=400&q=80" },
+            { name: "Thank You", subtitle: "A meaningful way to say thanks", img: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=400&q=80" },
+            { name: "Just Because", subtitle: "No reason needed for a great journey", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" }
+          ];
+        %>
+
+        <% for(let occ of occasions) { %>
+          <div data-occ="<%= occ.name %>" class="occ-card bg-white rounded-2xl border border-slate-200/70 p-3 shadow-sm hover:shadow-md hover:border-[#ff4757] cursor-pointer transition-all flex flex-col justify-between">
+            <div>
+              <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden mb-2.5">
+                <img src="<%= occ.img %>" alt="<%= occ.name %>" class="w-full h-full object-cover">
+              </div>
+              <h5 class="font-bold text-xs text-slate-900"><%= occ.name %></h5>
+              <p class="text-[10px] text-slate-500 mt-0.5 leading-snug"><%= occ.subtitle %></p>
+            </div>
+            <div class="mt-3 flex justify-end">
+              <span class="w-6 h-6 rounded-full border border-slate-200 flex items-center justify-center text-[10px] text-slate-400">
+                <i class="fa-solid fa-arrow-right"></i>
+              </span>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </section>
+
+    <!-- 4. ONE CARD. A WORLD OF POSSIBILITIES -->
+    <section class="w-full my-12 rounded-[2.5rem] bg-white border border-slate-200/80 p-8 sm:p-10 shadow-sm">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-4 space-y-4">
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            One Card.<br>
+            <span class="text-[#ff4757]">A World of Possibilities.</span>
+          </h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Use it for stays, experiences, destinations and more across our global travel community.
+          </p>
+          <div class="pt-2">
+            <a href="#giftCustomizer" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold text-white bg-[#0f172a] hover:bg-slate-800 transition-all text-decoration-none shadow-sm">
+              <span>Gift The World</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 relative flex items-center justify-center min-h-[220px]">
+          <div class="relative w-44 h-44 rounded-full bg-gradient-to-tr from-sky-400 to-emerald-300 shadow-xl flex items-center justify-center border-4 border-white">
+            <span class="text-5xl">🌍</span>
+            <div class="absolute -top-3 -right-3 bg-white p-1 rounded-xl shadow-md border border-slate-100 text-[8px] font-bold text-slate-700 transform rotate-12">
+              <span>✈ Experiences</span>
+            </div>
+            <div class="absolute -bottom-2 -left-3 bg-white p-1 rounded-xl shadow-md border border-slate-100 text-[8px] font-bold text-slate-700 transform -rotate-12">
+              <span>🏝 Destinations</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 space-y-4">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs shrink-0 mt-0.5">
+              <i class="fa-solid fa-ticket"></i>
+            </div>
+            <div>
+              <h6 class="text-xs font-bold text-slate-900">Flexible Use</h6>
+              <p class="text-[11px] text-slate-500 leading-tight">Redeem for stays, experiences or anything on WonderLust</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-xs shrink-0 mt-0.5">
+              <i class="fa-solid fa-earth-americas"></i>
+            </div>
+            <div>
+              <h6 class="text-xs font-bold text-slate-900">Global Access</h6>
+              <p class="text-[11px] text-slate-500 leading-tight">Valid at thousands of destinations worldwide</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xs shrink-0 mt-0.5">
+              <i class="fa-regular fa-heart"></i>
+            </div>
+            <div>
+              <h6 class="text-xs font-bold text-slate-900">Memorable Experiences</h6>
+              <p class="text-[11px] text-slate-500 leading-tight">Give more than a gift, give a story</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center text-xs shrink-0 mt-0.5">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+              <h6 class="text-xs font-bold text-slate-900">Instant &amp; Easy</h6>
+              <p class="text-[11px] text-slate-500 leading-tight">Send instantly, redeem effortlessly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include("../partials/footer.ejs") %>
+  </main>
+
+  <!-- MODAL 1: CHECKOUT & PURCHASE MODAL -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h4 class="text-base font-extrabold text-slate-900">Complete Gift Card Purchase</h4>
+          <span id="modalSelectedAmtBadge" class="text-xs font-bold text-[#ff4757]">Total: ₹2,500</span>
+        </div>
+        <button id="closeCheckoutModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm">✕</button>
+      </div>
+
+      <form id="giftCardPurchaseForm" class="space-y-3.5 text-xs text-left">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Recipient Name *</label>
+          <input type="text" id="formRecipientName" required placeholder="e.g. Rahul Sharma" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#ff4757]">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Recipient Email *</label>
+          <input type="email" id="formRecipientEmail" required placeholder="rahul@example.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#ff4757]">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Occasion</label>
+          <input type="text" id="formOccasion" value="General" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#ff4757]">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Personal Message</label>
+          <textarea id="formMessage" rows="2" placeholder="Wishing you unforgettable journeys and memories!" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-[#ff4757]"></textarea>
+        </div>
+
+        <button type="submit" id="submitOrderBtn" class="w-full py-3 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] via-[#ff5252] to-[#ff6b81] hover:brightness-105 active:scale-95 shadow-md shadow-[#ff4757]/30 transition-all flex items-center justify-center gap-2">
+          <span>Pay &amp; Generate Voucher Code</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CHECK BALANCE MODAL -->
+  <div id="balanceModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <h4 class="text-sm font-extrabold text-slate-900">Check Card Balance</h4>
+        <button id="closeBalanceModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <input type="text" id="balanceCodeInput" placeholder="Enter code (e.g. WL-5412-A3B1)" class="w-full uppercase bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#ff4757]">
+        <button type="button" id="queryBalanceBtn" class="w-full py-2.5 rounded-full text-xs font-bold text-white bg-slate-900 hover:bg-slate-800">
+          Check Now
+        </button>
+        <div id="balanceResultBox" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-100 text-slate-800 space-y-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENT INTEGRATION JAVASCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let currentAmount = 2500;
+      let currentOccasion = "General";
+
+      const amtBtns = document.querySelectorAll(".amt-btn");
+      const customBtn = document.getElementById("customAmtBtn");
+      const heroTag = document.getElementById("heroCardAmtTag");
+      const modalAmtBadge = document.getElementById("modalSelectedAmtBadge");
+      
+      const checkoutModal = document.getElementById("checkoutModal");
+      const continueBtn = document.getElementById("continueCheckoutBtn");
+      const closeCheckout = document.getElementById("closeCheckoutModal");
+      const openMsg = document.getElementById("openMsgModal");
+      
+      const balanceModal = document.getElementById("balanceModal");
+      const openBalBtn = document.getElementById("openBalanceBtn");
+      const closeBalModal = document.getElementById("closeBalanceModal");
+      
+      const toast = document.getElementById("successToast");
+      const toastText = document.getElementById("toastMsgText");
+
+      function showToast(msg) {
+        toastText.textContent = msg;
+        toast.classList.remove("-translate-y-20", "opacity-0");
+        setTimeout(() => toast.classList.add("-translate-y-20", "opacity-0"), 4000);
+      }
+
+      // Amount Selector Logic
+      amtBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (btn === customBtn) {
+            const userAmt = prompt("Enter amount in INR (minimum ₹500):", "3500");
+            if (userAmt && !isNaN(userAmt) && Number(userAmt) >= 500) {
+              currentAmount = Number(userAmt);
+              customBtn.textContent = "₹" + currentAmount.toLocaleString("en-IN");
+            } else {
+              return;
+            }
+          } else {
+            currentAmount = Number(btn.dataset.val);
+          }
+
+          amtBtns.forEach(b => {
+            b.classList.remove("border-[#ff4757]", "bg-rose-50", "text-[#ff4757]", "shadow-sm");
+            b.classList.add("border-slate-200", "bg-white", "text-slate-700");
+          });
+          btn.classList.add("border-[#ff4757]", "bg-rose-50", "text-[#ff4757]", "shadow-sm");
+          btn.classList.remove("border-slate-200", "bg-white", "text-slate-700");
+
+          heroTag.textContent = "Value: ₹" + currentAmount.toLocaleString("en-IN");
+          modalAmtBadge.textContent = "Total: ₹" + currentAmount.toLocaleString("en-IN");
+        });
+      });
+
+      // Occasion Card Click to Fill
+      document.querySelectorAll(".occ-card").forEach(card => {
+        card.addEventListener("click", () => {
+          currentOccasion = card.dataset.occ;
+          document.getElementById("formOccasion").value = currentOccasion;
+          document.getElementById("msgSubtext").textContent = "Occasion: " + currentOccasion;
+          document.getElementById("msgSubtext").classList.add("text-[#ff4757]", "font-bold");
+          checkoutModal.classList.remove("hidden");
+        });
+      });
+
+      // Open Checkout Modal
+      const triggerModal = () => checkoutModal.classList.remove("hidden");
+      if (continueBtn) continueBtn.addEventListener("click", triggerModal);
+      if (openMsg) openMsg.addEventListener("click", triggerModal);
+      if (closeCheckout) closeCheckout.addEventListener("click", () => checkoutModal.classList.add("hidden"));
+
+      // Balance Modal Triggers
+      if (openBalBtn) openBalBtn.addEventListener("click", () => balanceModal.classList.remove("hidden"));
+      if (closeBalModal) closeBalModal.addEventListener("click", () => balanceModal.classList.add("hidden"));
+
+      // Submit Form to Backend Database via Fetch API
+      const purchaseForm = document.getElementById("giftCardPurchaseForm");
+      if (purchaseForm) {
+        purchaseForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const btn = document.getElementById("submitOrderBtn");
+          btn.disabled = true;
+          btn.innerText = "Processing...";
+
+          const payload = {
+            amount: currentAmount,
+            recipientName: document.getElementById("formRecipientName").value,
+            recipientEmail: document.getElementById("formRecipientEmail").value,
+            occasion: document.getElementById("formOccasion").value,
+            message: document.getElementById("formMessage").value
+          };
+
+          try {
+            const res = await fetch("/gift-cards/buy", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (data.success) {
+              checkoutModal.classList.add("hidden");
+              document.getElementById("previewCardCode").textContent = "Serial #" + data.giftCard.code;
+              showToast(`Order Placed! Code: ${data.giftCard.code} saved in Database.`);
+              purchaseForm.reset();
+            } else {
+              alert(data.message || "Something went wrong!");
+            }
+          } catch (err) {
+            alert("Network error: Could not complete order.");
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<span>Pay &amp; Generate Voucher Code</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>`;
+          }
+        });
+      }
+
+      // Query Balance Client Logic
+      const queryBalBtn = document.getElementById("queryBalanceBtn");
+      const balInput = document.getElementById("balanceCodeInput");
+      const resBox = document.getElementById("balanceResultBox");
+
+      if (queryBalBtn && balInput && resBox) {
+        queryBalBtn.addEventListener("click", async () => {
+          const code = balInput.value.trim();
+          if (!code) return alert("Please enter voucher code");
+
+          try {
+            const res = await fetch("/gift-cards/check-balance", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ code })
+            });
+
+            const data = await res.json();
+            resBox.classList.remove("hidden");
+            if (data.success) {
+              resBox.innerHTML = `
+                <div class="text-[11px] font-bold text-emerald-600">Active Card</div>
+                <div class="text-xs">Recipient: <b>${data.recipientName}</b></div>
+                <div class="text-xs font-extrabold text-[#ff4757]">Available Balance: ₹${data.balance.toLocaleString("en-IN")}</div>
+              `;
+            } else {
+              resBox.innerHTML = `<div class="text-xs text-rose-600 font-bold">${data.message}</div>`;
+            }
+          } catch (err) {
+            alert("Error querying balance.");
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

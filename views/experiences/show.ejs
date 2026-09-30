@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= experience.title %> | WonderLust Experiences</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-[#fafafa] font-sans text-slate-900 antialiased selection:bg-[#ff4757]/20 selection:text-[#ff4757]">
+
+  <%- include("../partials/navbar.ejs", { activeTab: "experiences" }) %>
+
+  <!-- Share Toast Alert -->
+  <div id="toastAlert" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-xs">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toastMsg">Link copied to clipboard!</span>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-28 mb-16">
+    
+    <!-- Title & Action Buttons -->
+    <div class="mb-6">
+      <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+        <a href="/experiences" class="hover:underline text-slate-600">Experiences</a>
+        <span>›</span>
+        <span class="text-slate-800 font-medium"><%= experience.category %></span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight"><%= experience.title %></h1>
+          <div class="flex flex-wrap items-center gap-3 mt-2 text-xs sm:text-sm text-slate-600">
+            <span class="font-bold flex items-center gap-1 text-slate-900">
+              <span class="text-amber-400">★</span> <%= experience.rating %> (<%= experience.reviewCount %> reviews)
+            </span>
+            <span>•</span>
+            <span class="font-medium text-slate-700"><%= experience.location %>, <%= experience.country %></span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button type="button" id="shareBtn" class="flex items-center gap-1.5 px-4 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold shadow-sm transition-all active:scale-95">
+            <i class="fa-solid fa-arrow-up-from-bracket text-slate-600"></i>
+            <span>Share</span>
+          </button>
+          <button type="button" id="saveExpBtn" class="flex items-center gap-1.5 px-4 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold shadow-sm transition-all active:scale-95">
+            <i id="saveExpIcon" class="fa-regular fa-heart text-slate-600"></i>
+            <span id="saveExpText">Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-3xl overflow-hidden mb-12 shadow-sm aspect-[16/9] max-h-[480px]">
+      <div class="md:col-span-2 h-full overflow-hidden bg-slate-100 relative group">
+        <img id="mainDisplayImage" src="<%= (experience.gallery && experience.gallery[0]) ? experience.gallery[0] : experience.image %>" alt="<%= experience.title %>" class="w-full h-full object-cover transition-all duration-300"/>
+        <div class="absolute bottom-3 left-3 bg-black/50 backdrop-blur-md text-white text-[11px] px-3 py-1 rounded-full font-medium">Click thumbnails to preview</div>
+      </div>
+
+      <div class="hidden md:flex flex-col gap-3 h-full">
+        <div class="h-1/2 overflow-hidden bg-slate-100 cursor-pointer rounded-2xl group border-2 border-transparent hover:border-[#ff4757] transition-all">
+          <img src="<%= (experience.gallery && experience.gallery[1]) ? experience.gallery[1] : experience.image %>" alt="Gallery 1" class="gallery-thumb w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"/>
+        </div>
+        <div class="h-1/2 overflow-hidden bg-slate-100 cursor-pointer rounded-2xl group border-2 border-transparent hover:border-[#ff4757] transition-all">
+          <img src="<%= (experience.gallery && experience.gallery[2]) ? experience.gallery[2] : experience.image %>" alt="Gallery 2" class="gallery-thumb w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"/>
+        </div>
+      </div>
+
+      <div class="hidden md:block h-full overflow-hidden bg-slate-100 cursor-pointer rounded-2xl group border-2 border-transparent hover:border-[#ff4757] transition-all">
+        <img src="<%= (experience.gallery && experience.gallery[3]) ? experience.gallery[3] : experience.image %>" alt="Gallery 3" class="gallery-thumb w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"/>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <!-- Left Details (8 cols) -->
+      <div class="lg:col-span-8 space-y-10">
+        
+        <!-- Specs -->
+        <div class="flex flex-wrap items-center gap-6 p-5 bg-white rounded-3xl border border-slate-200/80 shadow-sm text-xs font-semibold text-slate-700">
+          <div class="flex items-center gap-2"><i class="fa-regular fa-clock text-[#ff4757] text-base"></i><span>Duration: <%= experience.duration %></span></div>
+          <div class="flex items-center gap-2"><i class="fa-solid fa-users text-[#ff4757] text-base"></i><span>Max Group: <%= experience.maxGuests %> guests</span></div>
+          <div class="flex items-center gap-2"><i class="fa-solid fa-language text-[#ff4757] text-base"></i><span>Hosted in: <%= experience.language %></span></div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">About this experience</h3>
+          <p class="text-sm text-slate-600 leading-relaxed"><%= experience.description %></p>
+        </div>
+
+        <!-- Timeline -->
+        <% if(experience.itinerary && experience.itinerary.length > 0) { %>
+          <div class="border-t border-slate-200 pt-8">
+            <h3 class="text-xl font-bold text-slate-900 mb-6">What you'll do</h3>
+            <div class="space-y-6 relative border-l-2 border-rose-200 ml-3 pl-6">
+              <% for(let item of experience.itinerary) { %>
+                <div class="relative">
+                  <div class="absolute -left-[31px] top-0.5 w-3.5 h-3.5 rounded-full bg-[#ff4757] ring-4 ring-rose-100"></div>
+                  <span class="text-xs font-bold text-[#ff4757]"><%= item.time %></span>
+                  <h5 class="text-sm font-bold text-slate-900 mt-0.5"><%= item.title %></h5>
+                  <p class="text-xs text-slate-500 mt-1"><%= item.description %></p>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% } %>
+
+        <!-- What's Included -->
+        <% if(experience.included && experience.included.length > 0) { %>
+          <div class="border-t border-slate-200 pt-8">
+            <h3 class="text-xl font-bold text-slate-900 mb-4">What's included</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <% for(let inc of experience.included) { %>
+                <div class="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-200/60 shadow-sm text-xs font-medium text-slate-700">
+                  <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+                  <span><%= inc %></span>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% } %>
+
+        <!-- Reviews & Rating Submission Form -->
+        <div class="border-t border-slate-200 pt-8">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-slate-900">Guest Reviews & Ratings</h3>
+            <div class="flex items-center gap-1.5 text-sm font-bold text-slate-800">
+              <span class="text-amber-400 text-lg">★</span>
+              <span><%= experience.rating %></span>
+              <span class="text-slate-400 font-normal">(<%= experience.reviewCount %> total)</span>
+            </div>
+          </div>
+
+          <!-- Add Review Form -->
+          <form action="/experiences/<%= experience._id %>/reviews" method="POST" class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+            <h5 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Leave a Review</h5>
+            <div class="flex items-center gap-3">
+              <label class="text-xs font-semibold text-slate-600">Rating:</label>
+              <select name="rating" class="text-xs border border-slate-200 rounded-lg p-1.5 bg-slate-50 focus:outline-none">
+                <option value="5">★★★★★ (5 - Outstanding)</option>
+                <option value="4">★★★★☆ (4 - Very Good)</option>
+                <option value="3">★★★☆☆ (3 - Average)</option>
+              </select>
+            </div>
+            <textarea name="comment" placeholder="Share your experience with other travelers..." rows="2" class="w-full text-xs p-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#ff4757]"></textarea>
+            <button type="submit" class="px-5 py-2 rounded-full text-xs font-bold text-white bg-slate-900 hover:bg-black transition-colors">
+              Submit Review
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Right Sticky Booking Card (With Slot Selection) -->
+      <div class="lg:col-span-4">
+        <div class="sticky top-28 bg-white rounded-3xl border border-slate-200/80 shadow-[0_12px_40px_rgba(0,0,0,0.08)] p-6">
+          
+          <div class="flex items-baseline justify-between mb-4 pb-4 border-b border-slate-100">
+            <div>
+              <span class="text-2xl font-extrabold text-slate-900">₹<%= Number(experience.price || 12000).toLocaleString("en-IN") %></span>
+              <span class="text-xs text-slate-500 font-normal">/ guest</span>
+            </div>
+            <div class="text-xs font-bold text-slate-800">
+              <span class="text-amber-400">★</span> <%= experience.rating %>
+            </div>
+          </div>
+
+          <form 
+            id="bookingForm"
+            action="/experiences/<%= experience._id %>/checkout" 
+            method="GET" 
+            class="space-y-4"
+            data-price="<%= Number(experience.price) || 12000 %>"
+            data-max-guests="<%= Number(experience.maxGuests) || 8 %>"
+          >
+            
+            <!-- Date Picker -->
+            <div class="border border-slate-200 rounded-2xl p-3 focus-within:border-[#ff4757]">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Select Date</label>
+              <input type="date" name="date" required id="bookingDateInput" class="w-full text-xs font-semibold text-slate-800 focus:outline-none bg-transparent cursor-pointer">
+            </div>
+
+            <!-- Time Slot Selection -->
+            <div class="border border-slate-200 rounded-2xl p-3 focus-within:border-[#ff4757]">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Choose Time Slot</label>
+              <select name="slot" class="w-full text-xs font-semibold text-slate-800 bg-transparent focus:outline-none cursor-pointer">
+                <option value="09:00 AM - Morning Explorer">🌅 09:00 AM - Morning Explorer</option>
+                <option value="02:00 PM - Afternoon Tour">☀️ 02:00 PM - Afternoon Tour</option>
+                <option value="05:00 PM - Sunset Special" selected>🌇 05:00 PM - Sunset Special</option>
+              </select>
+            </div>
+
+            <!-- Guests Stepper -->
+            <div class="border border-slate-200 rounded-2xl p-3 flex items-center justify-between">
+              <div>
+                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500">Guests</label>
+                <span id="guestDisplay" class="text-xs font-semibold text-slate-800">2 guests</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" id="btnMinusGuest" class="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-700 font-bold active:scale-95">-</button>
+                <input type="hidden" name="guests" id="guestsHiddenInput" value="2">
+                <button type="button" id="btnPlusGuest" class="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-700 font-bold active:scale-95">+</button>
+              </div>
+            </div>
+
+            <!-- Price Breakdown Calculation -->
+            <div class="space-y-2.5 pt-2 text-xs text-slate-600">
+              <div class="flex justify-between">
+                <span id="priceCalcLabel">₹<%= Number(experience.price || 12000).toLocaleString("en-IN") %> × 2 guests</span>
+                <span id="subtotalLabel" class="font-semibold text-slate-800">₹<%= (Number(experience.price || 12000) * 2).toLocaleString("en-IN") %></span>
+              </div>
+              <div class="flex justify-between">
+                <span>Service fee (8%)</span>
+                <span id="feeLabel" class="font-semibold text-slate-800">₹<%= Math.round(Number(experience.price || 12000) * 2 * 0.08).toLocaleString("en-IN") %></span>
+              </div>
+              <div class="flex justify-between font-extrabold text-slate-900 border-t border-slate-100 pt-3 text-sm">
+                <span>Total amount</span>
+                <span id="totalLabel" class="text-base text-slate-900 font-extrabold">₹<%= Math.round(Number(experience.price || 12000) * 2 * 1.08).toLocaleString("en-IN") %></span>
+              </div>
+            </div>
+
+            <!-- Reserve Button -->
+            <button type="submit" class="w-full mt-4 py-3.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-[#ff4757] to-[#ff6b81] hover:brightness-105 active:scale-[0.98] shadow-lg shadow-[#ff4757]/30 transition-all">
+              Reserve Experience
+            </button>
+            <p class="text-[11px] text-center text-slate-400 mt-2">You won't be charged yet</p>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <%- include("../partials/footer.ejs") %>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const bookingForm = document.getElementById("bookingForm");
+      if (bookingForm) {
+        const pricePerGuest = Number(bookingForm.dataset.price) || 12000;
+        const maxGuests = Number(bookingForm.dataset.maxGuests) || 8;
+        let guestCount = 2;
+
+        const dateInput = document.getElementById("bookingDateInput");
+        if (dateInput) {
+          const today = new Date().toISOString().split("T")[0];
+          dateInput.value = today;
+          dateInput.min = today;
+        }
+
+        const guestDisplay = document.getElementById("guestDisplay");
+        const guestsHiddenInput = document.getElementById("guestsHiddenInput");
+        const priceCalcLabel = document.getElementById("priceCalcLabel");
+        const subtotalLabel = document.getElementById("subtotalLabel");
+        const feeLabel = document.getElementById("feeLabel");
+        const totalLabel = document.getElementById("totalLabel");
+
+        function updateWidget() {
+          if (guestDisplay) guestDisplay.textContent = guestCount + (guestCount === 1 ? " guest" : " guests");
+          if (guestsHiddenInput) guestsHiddenInput.value = guestCount;
+
+          const subtotal = pricePerGuest * guestCount;
+          const fee = Math.round(subtotal * 0.08);
+          const total = subtotal + fee;
+
+          if (priceCalcLabel) priceCalcLabel.textContent = "₹" + pricePerGuest.toLocaleString("en-IN") + " × " + guestCount + " guests";
+          if (subtotalLabel) subtotalLabel.textContent = "₹" + subtotal.toLocaleString("en-IN");
+          if (feeLabel) feeLabel.textContent = "₹" + fee.toLocaleString("en-IN");
+          if (totalLabel) totalLabel.textContent = "₹" + total.toLocaleString("en-IN");
+        }
+
+        const btnMinus = document.getElementById("btnMinusGuest");
+        const btnPlus = document.getElementById("btnPlusGuest");
+
+        if (btnMinus) {
+          btnMinus.addEventListener("click", () => {
+            if (guestCount > 1) {
+              guestCount--;
+              updateWidget();
+            }
+          });
+        }
+
+        if (btnPlus) {
+          btnPlus.addEventListener("click", () => {
+            if (guestCount < maxGuests) {
+              guestCount++;
+              updateWidget();
+            }
+          });
+        }
+
+        updateWidget();
+      }
+
+      // Thumbnails Swap
+      const mainImg = document.getElementById("mainDisplayImage");
+      const thumbnails = document.querySelectorAll(".gallery-thumb");
+      thumbnails.forEach((thumb) => {
+        thumb.addEventListener("click", () => {
+          if (mainImg) mainImg.src = thumb.src;
+        });
+      });
+
+      // Share Button
+      const shareBtn = document.getElementById("shareBtn");
+      const toast = document.getElementById("toastAlert");
+      if (shareBtn && toast) {
+        shareBtn.addEventListener("click", async () => {
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: "<%= experience.title %>", url: window.location.href });
+            } catch (err) {}
+          } else {
+            navigator.clipboard.writeText(window.location.href);
+            toast.classList.remove("translate-y-20", "opacity-0");
+            setTimeout(() => toast.classList.add("translate-y-20", "opacity-0"), 2500);
+          }
+        });
+      }
+
+      // Save Toggle
+      const saveBtn = document.getElementById("saveExpBtn");
+      const saveIcon = document.getElementById("saveExpIcon");
+      const saveText = document.getElementById("saveExpText");
+      if (saveBtn && saveIcon && saveText) {
+        saveBtn.addEventListener("click", () => {
+          if (saveIcon.classList.contains("fa-regular")) {
+            saveIcon.classList.remove("fa-regular", "text-slate-600");
+            saveIcon.classList.add("fa-solid", "text-[#ff4757]");
+            saveText.textContent = "Saved";
+            saveText.classList.add("text-[#ff4757]");
+          } else {
+            saveIcon.classList.remove("fa-solid", "text-[#ff4757]");
+            saveIcon.classList.add("fa-regular", "text-slate-600");
+            saveText.textContent = "Save";
+            saveText.classList.remove("text-[#ff4757]");
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

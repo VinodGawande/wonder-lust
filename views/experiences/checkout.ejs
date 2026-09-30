@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | <%= experience.title %></title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-[#fafafa] font-sans text-slate-900 antialiased">
+
+  <%- include("../partials/navbar.ejs", { activeTab: "experiences" }) %>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-28 mb-16">
+    
+    <div class="flex items-center gap-3 mb-6">
+      <a href="/experiences/<%= experience._id %>" class="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-700 hover:bg-slate-100">
+        <i class="fa-solid fa-chevron-left text-xs"></i>
+      </a>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Confirm & Pay</h1>
+    </div>
+
+    <form action="/experiences/<%= experience._id %>/book" method="POST" class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      
+      <!-- Left: Form & Payment (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+        
+        <!-- Trip Details -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm">
+          <h3 class="text-base font-bold text-slate-900 mb-3">Your Selected Experience</h3>
+          <div class="flex justify-between items-center py-2.5 border-b border-slate-100 text-xs">
+            <div>
+              <span class="font-bold block text-slate-800">Date & Slot</span>
+              <span class="text-slate-500"><%= date %> • <%= slot %></span>
+            </div>
+            <input type="hidden" name="date" value="<%= date %>">
+            <input type="hidden" name="slot" value="<%= slot %>">
+            <a href="/experiences/<%= experience._id %>" class="text-[#ff4757] font-semibold underline">Edit</a>
+          </div>
+          <div class="flex justify-between items-center py-2.5 text-xs">
+            <div>
+              <span class="font-bold block text-slate-800">Guests</span>
+              <span class="text-slate-500"><%= guests %> guests</span>
+            </div>
+            <input type="hidden" name="guests" value="<%= guests %>">
+            <a href="/experiences/<%= experience._id %>" class="text-[#ff4757] font-semibold underline">Edit</a>
+          </div>
+        </div>
+
+        <!-- Lead Guest Info -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-4">
+          <h3 class="text-base font-bold text-slate-900">Lead Traveler Information</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">First Name</label>
+              <input type="text" name="firstName" required value="<%= currUser ? currUser.username : 'Vinod' %>" class="w-full border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#ff4757]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Last Name</label>
+              <input type="text" name="lastName" required value="Sharma" class="w-full border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#ff4757]">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Email Address (for Ticket)</label>
+              <input type="email" name="email" required value="<%= currUser ? (currUser.email || 'traveler@wonderlust.com') : 'traveler@wonderlust.com' %>" class="w-full border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#ff4757]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">WhatsApp / Phone Number</label>
+              <input type="tel" name="phone" required value="+91 98765 43210" class="w-full border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-[#ff4757]">
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method Options -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-4">
+          <h3 class="text-base font-bold text-slate-900">Select Payment Method</h3>
+          
+          <div class="space-y-3">
+            <!-- UPI Option -->
+            <label class="flex items-center justify-between p-3.5 border border-[#ff4757]/40 bg-rose-50/20 rounded-2xl cursor-pointer">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="paymentMethod" value="UPI" checked id="payModeUPI" class="text-[#ff4757] focus:ring-[#ff4757]">
+                <span class="text-xs font-bold text-slate-800">Scan & Pay via UPI / QR Code</span>
+              </div>
+              <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Instant Verification</span>
+            </label>
+
+            <!-- Dynamic UPI QR Container -->
+            <div id="upiQRBox" class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row items-center gap-5">
+              <img 
+                src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=upi://pay?pa=wonderlust@upi%26pn=WonderLust%26am=<%= totalAmount %>%26cu=INR" 
+                alt="UPI QR Code" 
+                class="w-28 h-28 border border-slate-200 rounded-xl bg-white p-1"
+              >
+              <div class="text-xs text-slate-600 space-y-1">
+                <div class="font-bold text-slate-900">Scan with any UPI App:</div>
+                <div class="flex gap-2 text-base text-slate-700 py-1">
+                  <i class="fa-brands fa-google-pay"></i>
+                  <i class="fa-solid fa-mobile-screen"></i> PhonePe • Paytm
+                </div>
+                <p class="text-[11px] text-slate-500">Amount: <b>₹<%= totalAmount.toLocaleString("en-IN") %></b></p>
+              </div>
+            </div>
+
+            <!-- Card Option -->
+            <label class="flex items-center justify-between p-3.5 border border-slate-200 rounded-2xl cursor-pointer hover:bg-slate-50">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="paymentMethod" value="Card" id="payModeCard" class="text-[#ff4757] focus:ring-[#ff4757]">
+                <span class="text-xs font-bold text-slate-800">Credit / Debit Card</span>
+              </div>
+              <div class="flex gap-1 text-slate-400 text-sm">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Confirm CTA -->
+        <button type="submit" class="w-full py-4 rounded-full text-sm font-bold text-white bg-gradient-to-r from-[#ff4757] to-[#ff6b81] hover:brightness-105 shadow-xl shadow-[#ff4757]/30 transition-all active:scale-[0.99]">
+          Confirm & Pay ₹<%= totalAmount.toLocaleString("en-IN") %>
+        </button>
+
+      </div>
+
+      <!-- Right: Summary Card (5 cols) -->
+      <div class="lg:col-span-5">
+        <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm sticky top-28 space-y-5">
+          
+          <div class="flex items-center gap-4">
+            <img src="<%= experience.image %>" alt="<%= experience.title %>" class="w-20 h-20 rounded-2xl object-cover">
+            <div>
+              <span class="text-[10px] font-bold uppercase text-[#ff4757]"><%= experience.category %></span>
+              <h4 class="font-bold text-slate-900 text-sm leading-tight mt-0.5"><%= experience.title %></h4>
+              <span class="text-xs text-slate-500 mt-1 block"><%= experience.location %>, <%= experience.country %></span>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-100 pt-4 space-y-2.5 text-xs text-slate-600">
+            <h5 class="font-bold text-slate-900 text-xs mb-2">Price Breakdown</h5>
+            <div class="flex justify-between">
+              <span>₹<%= experience.price.toLocaleString("en-IN") %> × <%= guests %> guests</span>
+              <span class="font-semibold text-slate-800">₹<%= subtotal.toLocaleString("en-IN") %></span>
+            </div>
+            <div class="flex justify-between">
+              <span>Service Fee (8%)</span>
+              <span class="font-semibold text-slate-800">₹<%= serviceFee.toLocaleString("en-IN") %></span>
+            </div>
+            <div class="flex justify-between">
+              <span>GST & Taxes (5%)</span>
+              <span class="font-semibold text-slate-800">₹<%= taxes.toLocaleString("en-IN") %></span>
+            </div>
+            <div class="flex justify-between font-extrabold text-slate-900 text-base border-t border-slate-200 pt-3">
+              <span>Total (INR)</span>
+              <span>₹<%= totalAmount.toLocaleString("en-IN") %></span>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-[11px] text-slate-500 space-y-1">
+            <p class="flex items-center gap-1.5 font-semibold text-slate-700">
+              <i class="fa-solid fa-shield-halved text-emerald-500"></i> Free cancellation up to 24h before
+            </p>
+            <p>Immediate entry pass will be generated after payment.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </form>
+
+  </main>
+
+  <%- include("../partials/footer.ejs") %>
+
+  <!-- Payment Mode Switch Script -->
+  <script>
+    const upiRadio = document.getElementById("payModeUPI");
+    const cardRadio = document.getElementById("payModeCard");
+    const qrBox = document.getElementById("upiQRBox");
+
+    if (upiRadio && cardRadio && qrBox) {
+      upiRadio.addEventListener("change", () => {
+        if (upiRadio.checked) qrBox.classList.remove("hidden");
+      });
+      cardRadio.addEventListener("change", () => {
+        if (cardRadio.checked) qrBox.classList.add("hidden");
+      });
+    }
+  </script>
+</body>
+</html>

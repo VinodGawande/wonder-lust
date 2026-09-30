@@ -1,25 +1,89 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/"><i class="fa-solid fa-compass"></i></a>
+<header class="navbar-wrapper position-fixed top-0 start-0 w-100 px-3 px-xl-5 py-3 z-3">
+  <nav class="navbar navbar-expand-lg glass-nav rounded-pill px-3 px-lg-4 py-2 d-flex align-items-center justify-content-between shadow-sm">
+    
+    <!-- LEFT: Exact Circular Compass Logo + WonderLust -->
+    <a class="navbar-brand d-flex align-items-center gap-2 m-0 p-0 text-decoration-none" href="/listings">
+      <div class="logo-circle-icon d-flex align-items-center justify-content-center">
+        <svg viewBox="0 0 36 36" fill="none" class="brand-compass-svg" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="16.5" stroke="#ff4757" stroke-width="1.8"/>
+          <!-- Star/Compass Needle -->
+          <polygon points="18,5 21,15 31,18 21,21 18,31 15,21 5,18 15,15" fill="#ff4757"/>
+          <circle cx="18" cy="18" r="3" fill="#ffffff"/>
+        </svg>
+      </div>
+      <span class="brand-name">Wonder<span class="brand-name-bold">Lust</span></span>
+    </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
-            <span class="navbar-toggler-icon"></span>
+    <!-- CENTER: Exact 3-Part Pill Search Bar -->
+    <form action="/listings" method="GET" class="search-capsule-glass d-none d-md-flex align-items-center m-0">
+      
+      <!-- Where -->
+      <div class="search-cell d-flex align-items-center gap-2 px-3 border-end">
+        <i class="fa-solid fa-location-dot text-secondary fa-sm"></i>
+        <div class="d-flex flex-column text-start">
+          <span class="cell-label">Where</span>
+          <input type="text" name="search" class="cell-input" placeholder="Search destinations" autocomplete="off">
+        </div>
+      </div>
+
+      <!-- When -->
+      <div class="search-cell d-flex align-items-center gap-2 px-3 border-end d-none d-lg-flex">
+        <i class="fa-regular fa-calendar text-secondary fa-sm"></i>
+        <div class="d-flex flex-column text-start">
+          <span class="cell-label">When</span>
+          <span class="cell-val">Any week</span>
+        </div>
+      </div>
+
+      <!-- Who -->
+      <div class="search-cell d-flex align-items-center gap-2 px-3">
+        <i class="fa-solid fa-user-group text-secondary fa-sm"></i>
+        <div class="d-flex flex-column text-start">
+          <span class="cell-label">Who</span>
+          <span class="cell-val">Add guests</span>
+        </div>
+      </div>
+
+      <!-- Red Coral Round Search Button -->
+      <button class="search-submit-btn rounded-circle d-flex align-items-center justify-content-center" type="submit">
+        <i class="fa-solid fa-magnifying-glass text-white fa-sm"></i>
+      </button>
+    </form>
+
+    <!-- RIGHT: Host Button + Globe + User Menu -->
+    <div class="d-flex align-items-center gap-2 gap-lg-3">
+      
+      <a href="/listings/new" class="glass-pill-btn text-decoration-none fw-semibold d-none d-sm-inline-block">
+        Host an Experience
+      </a>
+
+      <button type="button" class="glass-circle-btn d-none d-md-flex align-items-center justify-content-center border-0">
+        <i class="fa-solid fa-globe"></i>
+      </button>
+
+      <!-- User Menu Pill -->
+      <div class="dropdown">
+        <button class="user-pill-btn d-flex align-items-center gap-2 px-2 py-1 rounded-pill border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="avatar-holder rounded-circle overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="user" class="w-100 h-100 object-fit-cover">
+          </div>
+          <i class="fa-solid fa-chevron-down fa-2xs text-secondary pe-1"></i>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" href="/">Home</a>
-                <a class="nav-link" href="/listings">All Listings</a>
-                <a class="nav-link" href="/listings/new">Add new Listing</a>
-            </div>
-            <div class="navbar-nav ms-auto">
-                <% if(!currUser) { %>
-                    <a class="nav-link active" href="/signup">Sign up</a>
-                    <a class="nav-link" href="/login">Login</a>
-                    <% } %>
-                        <% if(currUser) { %>
-                            <a class="nav-link" href="/logout">Logout</a>
-                            <% } %>
-            </div>
-        </div>
-</nav>
+        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2 py-2">
+          <% if(!currUser) { %>
+            <li><a class="dropdown-item fw-semibold" href="/signup">Sign up</a></li>
+            <li><a class="dropdown-item" href="/login">Log in</a></li>
+          <% } else { %>
+            <li><div class="dropdown-header text-muted small">Signed in as <b><%= currUser.username %></b></div></li>
+            <li><a class="dropdown-item fw-semibold" href="/listings/new">Airbnb your home</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>
+          <% } %>
+        </ul>
+      </div>
+
+    </div>
+
+  </nav>
+</header>

@@ -1,0 +1,78 @@
+<% 
+  const currentCategory = (typeof activeCategory !== 'undefined') ? activeCategory : 'Trending';
+%>
+
+<!-- Category Floating White Strip with Taxes Toggle -->
+<div class="w-full my-6">
+  <div class="bg-white rounded-3xl sm:rounded-full border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-3 px-4 sm:px-6 flex items-center justify-between gap-4">
+    
+    <!-- Scrollable Categories with Smooth Hidden Scrollbar -->
+    <div class="flex items-center gap-6 sm:gap-8 overflow-x-auto no-scrollbar py-1">
+      
+      <!-- Trending -->
+      <a href="/listings" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Trending' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">🔥</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Trending' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Trending</span>
+      </a>
+
+      <!-- Luxury Villas -->
+      <a href="/listings?category=Luxury Villas" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Luxury Villas' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">💎</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Luxury Villas' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Luxury Villas</span>
+      </a>
+
+      <!-- Mountain Chalets -->
+      <a href="/listings?category=Mountain Chalets" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Mountain Chalets' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">🏔️</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Mountain Chalets' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Mountain Chalets</span>
+      </a>
+
+      <!-- Private Islands -->
+      <a href="/listings?category=Private Islands" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Private Islands' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">🏝️️</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Private Islands' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Private Islands</span>
+      </a>
+
+      <!-- Treehouses -->
+      <a href="/listings?category=Treehouses" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Treehouses' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">🛖</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Treehouses' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Treehouses</span>
+      </a>
+
+      <!-- Beachfront -->
+      <a href="/listings?category=Beachfront" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Beachfront' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">🏖️</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Beachfront' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Beachfront</span>
+      </a>
+
+      <!-- Cave Stays -->
+      <a href="/listings?category=Cave Stays" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Cave Stays' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">⛺</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Cave Stays' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Cave Stays</span>
+      </a>
+
+      <!-- Desert Domes -->
+      <a href="/listings?category=Desert Domes" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Desert Domes' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">🏜️</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Desert Domes' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Desert Domes</span>
+      </a>
+
+      <!-- Castles -->
+      <a href="/listings?category=Castles" class="flex flex-col items-center gap-1 text-decoration-none group shrink-0 transition-transform hover:-translate-y-0.5 <%= currentCategory === 'Castles' ? 'text-[#ff4757]' : 'text-slate-500 hover:text-slate-900' %>">
+        <span class="text-lg">🏰</span>
+        <span class="text-[11px] font-semibold tracking-tight <%= currentCategory === 'Castles' ? 'border-b-2 border-[#ff4757] pb-0.5' : '' %>">Castles</span>
+      </a>
+
+    </div>
+
+    <!-- Right: Show total with taxes Toggle Switch (iOS Pill Style) -->
+    <div class="flex items-center gap-3 shrink-0 border-l border-slate-200 pl-4 sm:pl-6">
+      <span class="text-xs font-semibold text-slate-600 whitespace-nowrap">Show total with taxes</span>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" id="taxSwitchToggle" class="sr-only peer">
+        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#ff4757]"></div>
+      </label>
+    </div>
+
+  </div>
+</div>

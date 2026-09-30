@@ -16,3 +16,14 @@
     }, false)
   })
 })()
+
+// --- TAX SWITCH TOGGLE LOGIC ---
+const taxToggle = document.getElementById("taxToggle");
+if (taxToggle) {
+  taxToggle.addEventListener("click", () => {
+    const taxTags = document.querySelectorAll(".tax-tag");
+    for (let tag of taxTags) {
+      tag.classList.toggle("d-none");
+    }
+  });
+}

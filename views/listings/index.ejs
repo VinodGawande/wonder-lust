@@ -1,23 +1,52 @@
-<% layout('layouts/boilerplate')%>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WonderLust | Vacation Homes & Luxury Stays</title>
 
-<h3>All listings</h3>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-    <% for(let listing of allListings) { %>
-    <a href="/listings/<%= listing._id %>" class="listing-link">
-        <div class="card col listing-card">
-            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
-                style="height: 20rem" />
-            <div class="card-img-overlay"></div>
-            <div class="card-body">
-                <p class="card-text">
-                    <b>
-                        <%=listing.title %>
-                    </b><br>
-                    &#8377; <%=listing.price.toLocaleString("en-IN") %> /night
-                </p>
-            </div>
-        </div>
-    </a>
-    <% } %>
-</div>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-[#fafafa] font-sans text-slate-900 antialiased selection:bg-[#ff4757]/20 selection:text-[#ff4757]">
+
+  <!-- Top Floating Navbar -->
+  <%- include("../partials/navbar.ejs") %>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <%- include("../partials/hero.ejs") %>
+    <%- include("../partials/categories.ejs") %>
+    <%- include("../partials/stays.ejs") %>
+    <%- include("../partials/destinations.ejs") %>
+    <%- include("../partials/experiences.ejs") %>
+    <%- include("../partials/features.ejs") %>
+    <%- include("../partials/testimonials.ejs") %>
+    <%- include("../partials/host-cta.ejs") %>
+    <%- include("../partials/footer.ejs") %>
+  </main>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

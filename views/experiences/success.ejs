@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmed | WonderLust</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #printableTicket, #printableTicket * { visibility: visible; }
+      #printableTicket { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; }
+    }
+  </style>
+</head>
+<body class="bg-[#fafafa] font-sans text-slate-900 antialiased">
+
+  <%- include("../partials/navbar.ejs", { activeTab: "experiences" }) %>
+
+  <main class="max-w-2xl mx-auto px-4 mt-28 mb-16 text-center">
+    
+    <!-- Success Badge -->
+    <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto mb-4 shadow-sm animate-bounce">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Experience Confirmed! 🎉</h1>
+    <p class="text-xs sm:text-sm text-slate-500 mt-1">Tickets & instructions have been sent to <b><%= booking.guestDetails.email %></b></p>
+
+    <!-- Printable Boarding Pass Ticket Card -->
+    <div id="printableTicket" class="bg-white rounded-3xl border border-slate-200/80 shadow-lg p-6 text-left mt-8 space-y-4 relative overflow-hidden">
+      
+      <div class="flex items-center gap-4 pb-4 border-b border-dashed border-slate-200">
+        <img src="<%= booking.experience.image %>" alt="<%= booking.experience.title %>" class="w-20 h-20 rounded-2xl object-cover">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-[#ff4757]">Official Boarding Pass</span>
+          <h3 class="font-bold text-slate-900 text-base mt-0.5"><%= booking.experience.title %></h3>
+          <span class="text-xs text-slate-500"><%= booking.experience.location %>, <%= booking.experience.country %></span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 text-xs py-2">
+        <div>
+          <span class="text-slate-400 block font-medium">Booking ID</span>
+          <span class="font-bold text-slate-800"><%= booking.bookingId %></span>
+        </div>
+        <div>
+          <span class="text-slate-400 block font-medium">Date & Slot</span>
+          <span class="font-bold text-slate-800"><%= booking.date %></span>
+        </div>
+        <div>
+          <span class="text-slate-400 block font-medium">Guests</span>
+          <span class="font-bold text-slate-800"><%= booking.guests %> Guests (<%= booking.guestDetails.firstName %>)</span>
+        </div>
+        <div>
+          <span class="text-slate-400 block font-medium">Amount Paid</span>
+          <span class="font-bold text-emerald-600">₹<%= booking.totalAmount.toLocaleString("en-IN") %> (<%= booking.paymentMethod %>)</span>
+        </div>
+      </div>
+
+      <div class="p-3 bg-slate-50 rounded-2xl text-[11px] text-slate-600 border border-slate-200/60">
+        <span class="font-bold block mb-1">📍 Meeting Point:</span>
+        <%= booking.experience.meetingPoint ? booking.experience.meetingPoint.address : booking.experience.location %>
+      </div>
+
+    </div>
+
+    <!-- Actions: Print Ticket & WhatsApp Share -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+      
+      <!-- Print / Download Button -->
+      <button onclick="window.print()" class="px-5 py-2.5 rounded-full text-xs font-semibold text-slate-800 bg-white border border-slate-200 hover:bg-slate-50 shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-print"></i>
+        <span>Print Ticket</span>
+      </button>
+
+      <!-- WhatsApp Share Button -->
+      <% const waText = encodeURIComponent(`Hey! My WonderLust Experience is confirmed!\n\nExperience: ${booking.experience.title}\nBooking ID: ${booking.bookingId}\nDate: ${booking.date}\nAmount: ₹${booking.totalAmount}`); %>
+      <a href="https://api.whatsapp.com/send?text=<%= waText %>" target="_blank" class="px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm flex items-center gap-2">
+        <i class="fa-brands fa-whatsapp text-sm"></i>
+        <span>Share on WhatsApp</span>
+      </a>
+
+      <!-- Back Link -->
+      <a href="/experiences" class="px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-[#ff4757] hover:bg-[#ff6b81] shadow-sm">
+        Explore More Experiences
+      </a>
+
+    </div>
+
+  </main>
+
+  <%- include("../partials/footer.ejs") %>
+</body>
+</html> 

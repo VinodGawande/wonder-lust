@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host an Experience | WonderLust</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            handwriting: ['"Caveat"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-[#fafafa] dark:bg-[#0b1329] font-sans text-slate-800 dark:text-slate-100 antialiased selection:bg-[#ff4757]/20 selection:text-[#ff4757] transition-colors duration-300">
+
+  <!-- Top Glass Navbar -->
+  <%- include("../partials/navbar.ejs", { activeTab: "host" }) %>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-16">
+    
+    <!-- ========================================== -->
+    <!-- 1. HERO SECTION: SHARE EXTRAORDINARY EXP   -->
+    <!-- ========================================== -->
+    <section class="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#faf7f2] via-[#f7eee7] to-[#ecded5] dark:from-slate-900 dark:via-slate-900/90 dark:to-slate-800 p-8 sm:p-12 lg:p-14 overflow-hidden border border-white/80 dark:border-slate-800 shadow-sm min-h-[580px] flex flex-col justify-between transition-colors">
+      
+      <!-- Right Floating Navigation Vertical Capsule -->
+      <div class="hidden xl:flex flex-col gap-2.5 absolute top-12 right-12 z-30">
+        <a href="/listings" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-800 hover:bg-white text-slate-700 dark:text-slate-200 shadow-sm border border-slate-200/60 dark:border-slate-700 text-xs font-semibold backdrop-blur-sm transition-all text-decoration-none">
+          <i class="fa-solid fa-house text-[#ff4757] text-[11px]"></i>
+          <span>Stays</span>
+        </a>
+        <a href="/experiences" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-800 hover:bg-white text-slate-700 dark:text-slate-200 shadow-sm border border-slate-200/60 dark:border-slate-700 text-xs font-semibold backdrop-blur-sm transition-all text-decoration-none">
+          <i class="fa-solid fa-compass text-[#ff4757] text-[11px]"></i>
+          <span>Experiences</span>
+        </a>
+        <a href="/destinations" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-800 hover:bg-white text-slate-700 dark:text-slate-200 shadow-sm border border-slate-200/60 dark:border-slate-700 text-xs font-semibold backdrop-blur-sm transition-all text-decoration-none">
+          <i class="fa-solid fa-location-dot text-[#ff4757] text-[11px]"></i>
+          <span>Destinations</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-20">
+        
+        <!-- Left Hero Copy -->
+        <div class="lg:col-span-6 space-y-6">
+          <span class="inline-block text-[11px] font-bold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">
+            BECOME A HOST
+          </span>
+
+          <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.08]">
+            Share<br>
+            <span class="font-serif italic font-normal bg-gradient-to-r from-[#ff4757] via-[#ff6b81] to-[#ff7f50] bg-clip-text text-transparent">Extraordinary</span><br>
+            Experiences
+          </h1>
+
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-normal leading-relaxed max-w-md">
+            Turn your local knowledge, skills or passion into meaningful experiences for travelers from around the world.
+          </p>
+
+          <div class="flex items-center gap-3">
+            <button type="button" id="startHostingCTA" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] via-[#ff5252] to-[#ff6b81] hover:brightness-105 active:scale-95 shadow-lg shadow-[#ff4757]/30 transition-all">
+              <span>Start Hosting</span>
+              <i class="fa-solid fa-arrow-right text-[11px]"></i>
+            </button>
+            <a href="#howItWorks" class="px-5 py-3.5 rounded-full text-xs font-bold bg-white/90 dark:bg-slate-800 hover:bg-white text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 shadow-sm transition-all text-decoration-none">
+              How it works
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Hero Visual: Village Villa + Wooden Plaque -->
+        <div class="lg:col-span-6 relative flex items-center justify-center min-h-[400px]">
+          
+          <div class="relative w-full max-w-[480px] aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-700">
+            <img 
+              src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=85" 
+              alt="Santorini Mediterranean Village Host" 
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+
+            <!-- Authentic Wooden Hanging Sign Plaque -->
+            <div class="absolute top-6 right-6 w-44 bg-[#f1dfcc] rounded-2xl p-4 shadow-2xl border-2 border-[#d9ba9b] transform rotate-3 flex flex-col items-center justify-center text-center font-handwriting text-slate-800">
+              <span class="text-xl sm:text-2xl leading-none">Your Place</span>
+              <span class="text-base sm:text-lg leading-tight text-slate-600 mt-1">Your Story</span>
+              <span class="text-lg sm:text-xl font-bold text-[#ff4757] mt-1 leading-snug">Their Next<br>Adventure</span>
+            </div>
+
+            <!-- Floating Host Badge -->
+            <div class="absolute bottom-5 left-5 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl p-3 shadow-xl border border-white/80 dark:border-slate-700 flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Superhost" class="w-9 h-9 rounded-full object-cover">
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block">Elena K.</span>
+                <span class="text-[10px] text-amber-500 font-semibold flex items-center gap-1">★ 4.98 (142 reviews)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. FOUR VALUE PILL CARDS STRIP             -->
+    <!-- ========================================== -->
+    <div class="w-full my-8">
+      <div class="bg-white dark:bg-slate-900 rounded-3xl sm:rounded-full border border-slate-200/80 dark:border-slate-800 shadow-[0_8px_30px_rgba(0,0,0,0.04)] p-4 sm:px-8 sm:py-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-[#ff4757] flex items-center justify-center text-sm shrink-0">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <h6 class="text-xs font-bold text-slate-900 dark:text-white">Reach Global Travelers</h6>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Get discovered by travelers worldwide</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center text-sm shrink-0">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <div>
+            <h6 class="text-xs font-bold text-slate-900 dark:text-white">Do What You Love</h6>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Share your skills, culture or local experiences</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 flex items-center justify-center text-sm shrink-0">
+            <i class="fa-solid fa-indian-rupee-sign"></i>
+          </div>
+          <div>
+            <h6 class="text-xs font-bold text-slate-900 dark:text-white">Earn Income</h6>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Turn your passion into a rewarding opportunity</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 flex items-center justify-center text-sm shrink-0">
+            <i class="fa-solid fa-earth-americas"></i>
+          </div>
+          <div>
+            <h6 class="text-xs font-bold text-slate-900 dark:text-white">Be Part of a Community</h6>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Join a growing community of passionate hosts</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. HOW IT WORKS (WITH DOTTED FLIGHT PATH)  -->
+    <!-- ========================================== -->
+    <section id="howItWorks" class="w-full my-12">
+      <div class="mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">How It Works</h2>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Start hosting in just a few simple steps.</p>
+      </div>
+
+      <div class="relative">
+        <!-- Curved Dotted Plane Flight Path -->
+        <div class="hidden lg:block absolute top-7 left-12 right-12 h-6 pointer-events-none z-0">
+          <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 24" fill="none">
+            <path d="M 50 12 Q 250 -4 500 12 T 950 12" stroke="#ff4757" stroke-width="1.8" stroke-dasharray="5 5" stroke-opacity="0.35"/>
+          </svg>
+          <div class="absolute -right-2 top-1 text-[#ff4757] text-base transform rotate-45">✈</div>
+        </div>
+
+        <!-- 4 Grid Steps -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+          
+          <!-- Step 1 -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+            <div class="w-7 h-7 rounded-full bg-[#ff4757] text-white flex items-center justify-center text-xs font-bold absolute -top-3 left-6 shadow-md">1</div>
+            <div class="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-[#ff4757] flex items-center justify-center text-base mb-4 mt-2">
+              <i class="fa-regular fa-id-card"></i>
+            </div>
+            <h5 class="text-sm font-bold text-slate-900 dark:text-white">Create Your Experience</h5>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">Add details, photos, pricing and what makes it special.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+            <div class="w-7 h-7 rounded-full bg-[#ff4757] text-white flex items-center justify-center text-xs font-bold absolute -top-3 left-6 shadow-md">2</div>
+            <div class="w-10 h-10 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center text-base mb-4 mt-2">
+              <i class="fa-regular fa-calendar-days"></i>
+            </div>
+            <h5 class="text-sm font-bold text-slate-900 dark:text-white">Set Your Availability</h5>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">Choose dates, time slots and maximum group size.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+            <div class="w-7 h-7 rounded-full bg-[#ff4757] text-white flex items-center justify-center text-xs font-bold absolute -top-3 left-6 shadow-md">3</div>
+            <div class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-500 flex items-center justify-center text-base mb-4 mt-2">
+              <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <h5 class="text-sm font-bold text-slate-900 dark:text-white">Get Discovered</h5>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">Travelers find and book your unique experience online.</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
+            <div class="w-7 h-7 rounded-full bg-[#ff4757] text-white flex items-center justify-center text-xs font-bold absolute -top-3 left-6 shadow-md">4</div>
+            <div class="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-purple-950/40 text-purple-500 flex items-center justify-center text-base mb-4 mt-2">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+            <h5 class="text-sm font-bold text-slate-900 dark:text-white">Host &amp; Earn</h5>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">Deliver amazing experiences and receive secure payouts.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. LIVE EARNING ESTIMATOR CAPSULE          -->
+    <!-- ========================================== -->
+    <section class="w-full my-12 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200/80 dark:border-slate-800 p-8 sm:p-10 shadow-sm">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-5 space-y-3">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#ff4757]">EARNING CALCULATOR</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Estimate what you could earn</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            See how much you can make by hosting small group experiences in your city or region.
+          </p>
+        </div>
+
+        <div class="lg:col-span-7 bg-slate-50 dark:bg-slate-800/60 rounded-3xl p-6 border border-slate-200/60 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="w-full sm:w-2/3 space-y-4">
+            <div>
+              <div class="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
+                <span>Group Size: <span id="groupSizeVal" class="text-[#ff4757]">4 guests</span></span>
+                <span>Price: <span id="priceVal" class="text-[#ff4757]">₹1,500</span> / guest</span>
+              </div>
+              <input type="range" id="guestRange" min="1" max="15" value="4" class="w-full accent-[#ff4757] cursor-pointer">
+            </div>
+            <div>
+              <div class="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
+                <span>Sessions per week</span>
+                <span id="sessionVal" class="text-[#ff4757]">3 sessions</span>
+              </div>
+              <input type="range" id="sessionRange" min="1" max="7" value="3" class="w-full accent-[#ff4757] cursor-pointer">
+            </div>
+          </div>
+
+          <div class="w-full sm:w-1/3 text-center sm:text-right border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-slate-700 pt-4 sm:pt-0 sm:pl-6">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Est. Monthly Earnings</span>
+            <span id="estEarningTotal" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white text-[#ff4757]">₹72,000</span>
+            <span class="text-[10px] text-slate-500 dark:text-slate-400 block mt-1">Based on 12 sessions</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 5. BOTTOM BANNER: TURN MOMENTS TO OPP      -->
+    <!-- ========================================== -->
+    <section class="relative w-full rounded-[2.5rem] overflow-hidden min-h-[260px] flex items-center shadow-lg border border-slate-200/60 dark:border-slate-800">
+      
+      <img 
+        src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=2000&q=80" 
+        alt="Santorini domes and bougainvillea" 
+        class="absolute inset-0 w-full h-full object-cover z-0"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent z-10"></div>
+
+      <div class="relative z-20 w-full p-8 sm:p-12 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 text-white">
+        
+        <div class="max-w-xl">
+          <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Turn Moments<br>
+            into Opportunities
+          </h3>
+          <p class="text-xs sm:text-sm text-white/80 mt-2 font-normal leading-relaxed">
+            From local tours to workshops, cooking classes, adventure activities and more — there's no limit to what you can share.
+          </p>
+          <button type="button" id="startHostingCTA2" class="mt-4 px-7 py-3 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] to-[#ff6b81] hover:brightness-105 shadow-md shadow-[#ff4757]/30 transition-all">
+            Start Hosting →
+          </button>
+        </div>
+
+        <!-- Handwritten Quote On Right -->
+        <div class="font-handwriting text-3xl sm:text-4xl text-white/90 rotate-[-4deg] text-right">
+          Real Travelers<br>
+          <span class="text-[#ff6b81]">Real Stories</span><br>
+          Real Impact
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include("../partials/footer.ejs") %>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CREATE / HOST EXPERIENCE FORM       -->
+  <!-- ========================================== -->
+  <div id="hostModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 dark:border-slate-800 space-y-4 max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div>
+          <h4 class="text-base font-extrabold text-slate-900 dark:text-white">List Your Experience</h4>
+          <span class="text-xs text-slate-500">Reach travelers across WonderLust</span>
+        </div>
+        <button id="closeHostModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm">✕</button>
+      </div>
+
+      <form action="/experiences" method="POST" class="space-y-3.5 text-xs text-left">
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Experience Title *</label>
+          <input type="text" name="title" required placeholder="e.g. Sunset Kayaking & Secret Cave Discovery" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#ff4757]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Category *</label>
+            <select name="category" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#ff4757]">
+              <option value="Tours">Tours &amp; Walks</option>
+              <option value="Adventure">Outdoor &amp; Adventure</option>
+              <option value="Cooking">Cooking &amp; Food</option>
+              <option value="Nature">Nature &amp; Wildlife</option>
+              <option value="Art & Culture">Art &amp; Culture</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">City / Location *</label>
+            <input type="text" name="location" required placeholder="e.g. Goa, India" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#ff4757]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Price Per Person (₹) *</label>
+            <input type="number" name="price" required min="100" placeholder="1500" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#ff4757]">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Duration *</label>
+            <input type="text" name="duration" required placeholder="e.g. 2.5 hours" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#ff4757]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Cover Image URL *</label>
+          <input type="url" name="image" required placeholder="https://images.unsplash.com/..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-[#ff4757]">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Short Description *</label>
+          <textarea name="description" rows="3" required placeholder="Tell travelers what makes your experience unique..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-[#ff4757]"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] to-[#ff6b81] shadow-md shadow-[#ff4757]/30 hover:brightness-105 active:scale-95 transition-all">
+          Publish Experience
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Host Modal Toggle
+      const hostModal = document.getElementById("hostModal");
+      const btn1 = document.getElementById("startHostingCTA");
+      const btn2 = document.getElementById("startHostingCTA2");
+      const closeBtn = document.getElementById("closeHostModal");
+
+      const openModal = () => hostModal.classList.remove("hidden");
+      const closeModal = () => hostModal.classList.add("hidden");
+
+      if (btn1) btn1.addEventListener("click", openModal);
+      if (btn2) btn2.addEventListener("click", openModal);
+      if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+      // 2. Dynamic Earnings Calculator
+      const guestSlider = document.getElementById("guestRange");
+      const sessionSlider = document.getElementById("sessionRange");
+      const guestVal = document.getElementById("groupSizeVal");
+      const sessionVal = document.getElementById("sessionVal");
+      const earningTotal = document.getElementById("estEarningTotal");
+
+      function updateEarnings() {
+        const guests = Number(guestSlider.value);
+        const sessionsPerWeek = Number(sessionSlider.value);
+        const pricePerGuest = 1500;
+
+        guestVal.textContent = guests + (guests === 1 ? " guest" : " guests");
+        sessionVal.textContent = sessionsPerWeek + (sessionsPerWeek === 1 ? " session" : " sessions");
+
+        // 4 weeks in a month
+        const monthly = guests * pricePerGuest * sessionsPerWeek * 4;
+        earningTotal.textContent = "₹" + monthly.toLocaleString("en-IN");
+      }
+
+      if (guestSlider && sessionSlider) {
+        guestSlider.addEventListener("input", updateEarnings);
+        sessionSlider.addEventListener("input", updateEarnings);
+      }
+    });
+  </script>
+</body>
+</html>

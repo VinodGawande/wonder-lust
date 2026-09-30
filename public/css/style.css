@@ -1,130 +1,47 @@
-body{
-   font-family: "Plus Jakarta Sans", sans-serif !important;
-   display: flex;
-   flex-direction: column;
-   min-height: 100vh;
+/* ========================================================
+   WONDERLUST STRICT THEME SYSTEM
+   ======================================================== */
+
+html {
+  scroll-behavior: smooth;
 }
 
-.container{
-    flex: 1;
+/* 1. STRICT DEFAULT LIGHT MODE */
+html:not(.dark) {
+  color-scheme: light;
 }
 
-.navbar{
-    height:5rem;
-    background-color: white;
+html:not(.dark) body {
+  background-color: #f8fafc;
+  color: #1e293b;
 }
 
-.fa-compass{
-    color: #fe424d;
-    font-size: 2rem;
+/* 2. STRICT DARK MODE */
+html.dark {
+  color-scheme: dark;
 }
 
-.nav-link{
-    color: #222222 !important;
+html.dark body {
+  background-color: #0b1329;
+  color: #f1f5f9;
 }
 
-
-/* Fotter */
-.f-info-links a{
-    text-decoration: none;
-    color: #222222;
+/* Clean Transition on Toggle */
+body, 
+header, 
+nav, 
+section, 
+div, 
+a, 
+button {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.f-info-links a{
-    text-decoration: underline;
-    
+/* Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-
-.f-info-links a:hover{
-    text-decoration: underline;
-}
-
-.f-info-links,
-.f-info-socials,
-.f-info-brand{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.f-info-socials{
-    font-size: 1.2rem;
-    margin-right: 1rem;
-}
-
-
-.f-info{
-    text-align: center;
-    height: 8rem;
-    background-color: #ebebeb;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: space-evenly;
-}
-
-/*Cards*/
-
-.listing-card{
-    border: none !important;
-    margin-bottom: 2rem;
-}
-
-.card-img-top{
-    border-radius: 1rem !important;
-    width: 100% !important;
-    object-fit: cover !important;
-}
-
-.card-body{
-    padding: 0 !important;
-}
-
-.caar-text p {
-    font-weight: 400 !important;
-}
-
-.listing-link{
-    text-decoration: none;
-}
-
-/* card effect */
-
-.card-img-overlay{
-    opacity: 0;
-}
-
-.card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: white;
-}
-  /*new page*/ 
-
-.add-btn{
-    background-color:  #fe424d !important;
-    border: none !important;
-}
-
-
-/* Edit page */
-
-.edit-btn{
-    background-color:  #fe424d !important;
-    border: none !important;
-}
-
-/* Show page */
-
-.show-img{
-    height: 30vh;
-}
-
-.btns{
-    display: flex;
-}
-
-.show-card{
-    padding-left: 0;
-    padding-right: 0;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
