@@ -1,0 +1,395 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="relative w-full antialiased font-sans text-slate-800 bg-[#f8f9fb] min-h-screen pb-24">
+
+  <!-- ========================================== -->
+  <!-- 1. TOP HERO BANNER: Sunset Panorama        -->
+  <!-- ========================================== -->
+  <div class="relative w-full h-56 sm:h-64 overflow-hidden">
+    <img 
+      src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2000&q=85" 
+      alt="Mediterranean Panorama" 
+      class="w-full h-full object-cover object-center filter brightness-[0.92]"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#f8f9fb]"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-8 relative z-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">My Bookings</h1>
+      <p class="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+        View and manage all your stays, experiences and activities in one place.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN CONTAINER & TOP TABS STRIP         -->
+  <!-- ========================================== -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 space-y-6">
+    
+    <!-- Top Filter Tabs + Search Controls -->
+    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-2.5 flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Left Category Pills -->
+      <div class="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar w-full md:w-auto">
+        <button type="button" onclick="filterBookingTab('all', this)" class="b-tab-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-[#ff4757] bg-rose-50/70 border border-rose-100 transition-all shrink-0 cursor-pointer">
+          <i class="fa-solid fa-list-check text-[11px]"></i>
+          <span>All Bookings (<span id="allCount">6</span>)</span>
+        </button>
+
+        <button type="button" onclick="filterBookingTab('Stay', this)" class="b-tab-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shrink-0 cursor-pointer">
+          <i class="fa-solid fa-house text-[11px] text-slate-400"></i>
+          <span>Stays (4)</span>
+        </button>
+
+        <button type="button" onclick="filterBookingTab('Experience', this)" class="b-tab-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shrink-0 cursor-pointer">
+          <i class="fa-solid fa-compass text-[11px] text-slate-400"></i>
+          <span>Experiences (1)</span>
+        </button>
+
+        <button type="button" onclick="filterBookingTab('Activity', this)" class="b-tab-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shrink-0 cursor-pointer">
+          <i class="fa-solid fa-ticket text-[11px] text-slate-400"></i>
+          <span>Activities (1)</span>
+        </button>
+      </div>
+
+      <!-- Right Search & Filter Pill -->
+      <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+        <div class="relative w-full sm:w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input 
+            type="text" 
+            id="bookingSearchInput" 
+            placeholder="Search your bookings..." 
+            class="w-full pl-9 pr-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#ff4757] bg-white transition-all"
+          />
+        </div>
+
+        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm shrink-0 cursor-pointer">
+          <i class="fa-solid fa-sliders text-[11px] text-slate-500"></i>
+          <span>Filter</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. BOOKINGS 2-COLUMN GRID (CARDS + SIDEBAR)-->
+    <!-- ========================================== -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- LEFT BOOKINGS LIST (Col 8) -->
+      <div class="lg:col-span-8 space-y-4" id="bookingCardsList">
+        
+        <% for(let b of bookings) { %>
+          <div class="booking-item-card bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-4 sm:p-5 flex flex-col md:flex-row gap-5 transition-all hover:shadow-md" data-type="<%= b.itemType %>" data-title="<%= b.title.toLowerCase() %>" data-location="<%= b.location.toLowerCase() %>">
+            
+            <!-- Left Image with Type Tag -->
+            <div class="relative w-full md:w-56 h-48 md:h-40 rounded-2xl overflow-hidden shrink-0 bg-slate-100">
+              <img src="<%= b.image %>" alt="<%= b.title %>" class="w-full h-full object-cover">
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/60 text-white backdrop-blur-sm flex items-center gap-1">
+                <i class="<%= b.itemType === 'Stay' ? 'fa-solid fa-house' : 'fa-solid fa-compass' %> text-[9px]"></i>
+                <span><%= b.itemType %></span>
+              </span>
+            </div>
+
+            <!-- Middle Information Details -->
+            <div class="flex-1 flex flex-col justify-between space-y-3">
+              <div>
+                <h3 class="text-base font-extrabold text-slate-900 leading-snug"><%= b.title %></h3>
+                <p class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-location-dot text-[10px] text-slate-400"></i>
+                  <span><%= b.location %></span>
+                </p>
+
+                <div class="text-[11px] text-slate-600 font-medium mt-2 space-y-0.5">
+                  <p class="flex items-center gap-1.5">
+                    <i class="fa-regular fa-calendar text-[10px] text-slate-400"></i>
+                    <span><%= b.dateRange %></span>
+                  </p>
+                  <p class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-group text-[10px] text-slate-400"></i>
+                    <span><%= b.guests %></span>
+                  </p>
+                </div>
+
+                <!-- Feature Pills -->
+                <div class="flex items-center gap-1.5 flex-wrap pt-2">
+                  <% if(b.tags && b.tags.length > 0) { %>
+                    <% for(let t of b.tags) { %>
+                      <span class="px-2.5 py-0.5 rounded-full text-[9px] font-semibold <%= t.includes('Free Cancellation') ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-slate-100 text-slate-600' %>">
+                        <%= t %>
+                      </span>
+                    <% } %>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- Action Buttons Row -->
+              <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                <% if(b.status === 'Confirmed') { %>
+                  <button type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+                    <i class="fa-regular fa-pen-to-square text-[10px]"></i>
+                    <span>Manage Booking</span>
+                  </button>
+                  <button type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] to-[#ff6b81] hover:brightness-105 shadow-sm shadow-[#ff4757]/20 cursor-pointer">
+                    <i class="fa-regular fa-comment-dots text-[10px]"></i>
+                    <span>Contact Host</span>
+                  </button>
+                <% } else if(b.status === 'Upcoming') { %>
+                  <button type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-pen text-[10px]"></i>
+                    <span>Modify Booking</span>
+                  </button>
+                  <button type="button" onclick="cancelBookingAction(this, '<%= b._id %>')" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-[#ff4757] hover:brightness-105 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-xmark text-[10px]"></i>
+                    <span>Cancel Booking</span>
+                  </button>
+                <% } else if(b.status === 'Completed') { %>
+                  <button type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                    <span>Book Again</span>
+                  </button>
+                  <a href="/reviews" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-[#ff4757] hover:brightness-105 shadow-sm text-decoration-none">
+                    <i class="fa-regular fa-star text-[10px]"></i>
+                    <span>Leave a Review</span>
+                  </a>
+                <% } else if(b.status === 'Cancelled') { %>
+                  <button type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+                    <i class="fa-regular fa-eye text-[10px]"></i>
+                    <span>View Details</span>
+                  </button>
+                  <button type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-[#ff4757] hover:brightness-105 shadow-sm cursor-pointer">
+                    <span>Book Again</span>
+                  </button>
+                <% } %>
+              </div>
+            </div>
+
+            <!-- Right Price & Status Column -->
+            <div class="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-2 shrink-0 md:min-w-[130px] border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+              
+              <!-- Status Badge -->
+              <% if(b.status === 'Confirmed') { %>
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                  <span>Confirmed</span>
+                </span>
+              <% } else if(b.status === 'Upcoming') { %>
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-200">
+                  <i class="fa-regular fa-clock text-[9px]"></i>
+                  <span>Upcoming</span>
+                </span>
+              <% } else if(b.status === 'Completed') { %>
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                  <i class="fa-regular fa-circle-check text-[9px]"></i>
+                  <span>Completed</span>
+                </span>
+              <% } else { %>
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-rose-50 text-rose-600 border border-rose-200">
+                  <i class="fa-solid fa-xmark text-[9px]"></i>
+                  <span>Cancelled</span>
+                </span>
+              <% } %>
+
+              <!-- Price -->
+              <div class="text-right mt-1 sm:mt-3">
+                <span class="text-lg font-extrabold text-slate-900 block">₹<%= b.totalPrice.toLocaleString("en-IN") %></span>
+                <a href="/listings" class="text-[11px] font-bold text-[#ff4757] hover:underline flex items-center justify-end gap-1 mt-0.5">
+                  <span>View Details</span>
+                  <span>></span>
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+        <% } %>
+
+      </div>
+
+      <!-- RIGHT SIDEBAR SUMMARY WIDGETS (Col 4) -->
+      <aside class="lg:col-span-4 space-y-5">
+        
+        <!-- 1. Booking Summary Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-5 space-y-4">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-chart-simple text-sm text-[#ff4757]"></i>
+            <div>
+              <h3 class="text-xs font-extrabold text-slate-900 leading-tight">Booking Summary</h3>
+              <p class="text-[10px] text-slate-400">A quick overview of your travel journey.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <div class="p-3 rounded-2xl bg-[#fafbfc] border border-slate-100 text-center space-y-1">
+              <i class="fa-solid fa-house text-sm text-slate-700"></i>
+              <span class="text-base font-extrabold text-slate-900 block leading-none">4</span>
+              <span class="text-[10px] text-slate-400 font-semibold uppercase block">Stays</span>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-[#fafbfc] border border-slate-100 text-center space-y-1">
+              <i class="fa-solid fa-compass text-sm text-[#ff4757]"></i>
+              <span class="text-base font-extrabold text-slate-900 block leading-none">1</span>
+              <span class="text-[10px] text-slate-400 font-semibold uppercase block">Experiences</span>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-[#fafbfc] border border-slate-100 text-center space-y-1">
+              <i class="fa-solid fa-ticket text-sm text-slate-700"></i>
+              <span class="text-base font-extrabold text-slate-900 block leading-none">1</span>
+              <span class="text-[10px] text-slate-400 font-semibold uppercase block">Activities</span>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-[#fafbfc] border border-slate-100 text-center space-y-1">
+              <i class="fa-solid fa-indian-rupee-sign text-sm text-[#ff4757]"></i>
+              <span class="text-sm font-extrabold text-slate-900 block leading-none">₹94,500</span>
+              <span class="text-[10px] text-slate-400 font-semibold uppercase block">Total Spent</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Travel Stats Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-5 space-y-4">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-trophy text-sm text-amber-500"></i>
+            <div>
+              <h3 class="text-xs font-extrabold text-slate-900 leading-tight">Travel Stats</h3>
+              <p class="text-[10px] text-slate-400">Your travel milestones with WonderLust.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-y-3.5 gap-x-2 pt-1 text-xs">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-globe text-slate-400 text-sm"></i>
+              <div>
+                <span class="font-extrabold text-slate-900 block leading-tight">3</span>
+                <span class="text-[10px] text-slate-400">Countries Visited</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-location-dot text-slate-400 text-sm"></i>
+              <div>
+                <span class="font-extrabold text-slate-900 block leading-tight">5</span>
+                <span class="text-[10px] text-slate-400">Cities Explored</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+              <i class="fa-regular fa-calendar text-slate-400 text-sm"></i>
+              <div>
+                <span class="font-extrabold text-slate-900 block leading-tight">18</span>
+                <span class="text-[10px] text-slate-400">Total Nights</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+              <i class="fa-regular fa-star text-amber-500 text-sm"></i>
+              <div>
+                <span class="font-extrabold text-slate-900 block leading-tight">4.7</span>
+                <span class="text-[10px] text-slate-400">Average Rating</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Need Help Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-5 space-y-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-headset text-sm text-[#ff4757]"></i>
+            <div>
+              <h3 class="text-xs font-extrabold text-slate-900 leading-tight">Need Help?</h3>
+              <p class="text-[10px] text-slate-400">Our support team is here for you.</p>
+            </div>
+          </div>
+
+          <button type="button" onclick="alert('Connecting to WonderLust 24/7 Support Team...')" class="w-full py-2.5 rounded-full border border-rose-200 text-xs font-bold text-[#ff4757] hover:bg-rose-50/50 flex items-center justify-center gap-2 transition-all cursor-pointer">
+            <i class="fa-solid fa-headset text-xs"></i>
+            <span>Contact Support</span>
+          </button>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Client-side Interactive Filter & Search Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("bookingSearchInput");
+    const cards = document.querySelectorAll(".booking-item-card");
+    let currentFilterType = "all";
+
+    // Tab Filter
+    window.filterBookingTab = function(type, btn) {
+      currentFilterType = type;
+      
+      document.querySelectorAll(".b-tab-pill").forEach(p => {
+        p.className = "b-tab-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shrink-0 cursor-pointer";
+        const icon = p.querySelector("i");
+        if(icon) icon.className = icon.className.replace("text-[#ff4757]", "text-slate-400");
+      });
+
+      btn.className = "b-tab-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-[#ff4757] bg-rose-50/70 border border-rose-100 transition-all shrink-0 cursor-pointer";
+      const activeIcon = btn.querySelector("i");
+      if(activeIcon) activeIcon.className = activeIcon.className.replace("text-slate-400", "text-[#ff4757]");
+
+      applyBookingsFilter();
+    };
+
+    // Live Search
+    if (searchInput) {
+      searchInput.addEventListener("input", applyBookingsFilter);
+    }
+
+    function applyBookingsFilter() {
+      const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+
+      cards.forEach(card => {
+        const type = card.dataset.type || "";
+        const title = card.dataset.title || "";
+        const loc = card.dataset.location || "";
+
+        const matchesType = (currentFilterType === "all") || (type.toLowerCase() === currentFilterType.toLowerCase());
+        const matchesQuery = !query || title.includes(query) || loc.includes(query);
+
+        if (matchesType && matchesQuery) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    }
+
+    // Cancel Booking Action
+    window.cancelBookingAction = function(btn, id) {
+      if (confirm("Are you sure you want to cancel this booking?")) {
+        const card = btn.closest(".booking-item-card");
+        if (card) {
+          const statusBadge = card.querySelector(".bg-amber-50");
+          if (statusBadge) {
+            statusBadge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-rose-50 text-rose-600 border border-rose-200";
+            statusBadge.innerHTML = `<i class="fa-solid fa-xmark text-[9px]"></i><span>Cancelled</span>`;
+          }
+          btn.remove();
+          showBookingToast("Booking successfully cancelled.");
+        }
+      }
+    };
+
+    function showBookingToast(message) {
+      const toast = document.createElement("div");
+      toast.className = "fixed top-24 left-1/2 transform -translate-x-1/2 z-[100] px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold backdrop-blur-md bg-emerald-600 text-white transition-all duration-300";
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i><span>${message}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translate(-50%, -15px)";
+        setTimeout(() => toast.remove(), 350);
+      }, 3000);
+    }
+  });
+</script> 

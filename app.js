@@ -32,6 +32,7 @@ const userRouter = require("./routess/user.js");
 const experienceRouter = require("./routess/experiences.js");
 const destinationRouter = require("./routess/destinations.js");
 const giftCardRouter = require("./routess/giftCards.js");
+const accountRouter = require("./routess/account.js");
 
 // Database Configuration & Connection
 const MONGO_URL = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/wonderlust";
@@ -79,7 +80,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
-// Modern Async Serialize & Deserialize (Mongoose v7/v8 safe)
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
@@ -105,47 +105,47 @@ app.use((req, res, next) => {
 // FEATURE ROUTES MOUNTING
 // ==========================================
 
-// 1. Destinations Routes (/destinations, /destinations/all, /destinations/:slug)
+// 1. Account & Profile Routes (/profile, /saved, /bookings, /reviews, /settings)
+app.use("/", accountRouter);
+
+// 2. Destinations Routes
 app.use("/destinations", destinationRouter);
 
-// 2. Experiences Routes (/experiences, /experiences/search, /experiences/:id)
+// 3. Experiences Routes
 app.use("/experiences", experienceRouter);
 
-// 3. Gift Cards Routes (/gift-cards, /gift-cards/buy, /gift-cards/check-balance)
+// 4. Gift Cards Routes
 app.use("/gift-cards", giftCardRouter);
 
-// 4. Listings (Stays) & Nested Reviews Routes
+// 5. Listings (Stays) & Reviews Routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 
-// 5. User Authentication Routes (/login, /signup, /forgot-password, /logout)
+// 6. User Authentication Routes (/login, /signup, /logout)
 app.use("/", userRouter);
 
-// 6. Booking Success Receipt Route (Direct Checkout callback)
+// 7. Booking Success Callback Route
 app.get("/booking/success", wrapAsync(experienceController.success));
 
-// 7. Root Route: Redirect to /destinations
+// 8. Root Route
 app.get("/", (req, res) => {
-    res.redirect("/destinations");
+    res.redirect("/listings");
 });
 
 // ==========================================
-// ERROR HANDLING (Express 5 Safe)
+// ERROR HANDLING
 // ==========================================
 
-// 404 Catch-All Handler
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
 
-// Global Error Responder
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong!" } = err;
     res.status(statusCode).render("error.ejs", { message });
 });
 
-// Server Listener
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`WonderLust server is listening on port ${port}`);
-}); 
+});
