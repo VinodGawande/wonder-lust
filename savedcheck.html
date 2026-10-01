@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WonderLust | Explore the World</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN (Play CDN - Instantly applies all Tailwind classes) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Local Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-[#f8fafc] font-sans text-slate-800 antialiased selection:bg-[#ff4757]/20 selection:text-[#ff4757] min-h-screen flex flex-col justify-between">
+
+  <!-- Floating Glass Navbar -->
+  
+
+<!-- Toast Notifications -->
+
+  <div id="flashToastContainer" class="fixed top-20 left-1/2 transform -translate-x-1/2 z-[100] w-full max-w-md px-4 transition-all duration-500">
+    
+      <div class="bg-emerald-600 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center justify-between gap-3 text-xs font-semibold backdrop-blur-md">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-base"></i>
+          <span>Welcome back, Test!</span>
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" class="text-white/80 hover:text-white text-sm">✕</button>
+      </div>
+    
+    
+  </div>
+  <script>
+    setTimeout(() => {
+      const toast = document.getElementById("flashToastContainer");
+      if(toast) {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%, -20px)';
+        setTimeout(() => toast.remove(), 400);
+      }
+    }, 4000);
+  </script>
+
+
+<!-- Floating Glass Navbar -->
+<header class="fixed top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-12 pt-3 pb-2 pointer-events-none">
+  <nav class="max-w-7xl mx-auto backdrop-blur-xl bg-white/95 border border-slate-200/90 shadow-[0_8px_30px_rgba(0,0,0,0.06)] rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between pointer-events-auto transition-all">
+    
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 group text-decoration-none">
+      <div class="w-8 h-8 rounded-full border-2 border-[#ff4757] flex items-center justify-center p-1 transition-transform group-hover:rotate-45 duration-300">
+        <svg viewBox="0 0 24 24" fill="none" class="w-full h-full text-[#ff4757]">
+          <circle cx="12" cy="12" r="9" stroke="#ff4757" stroke-width="2" />
+          <polygon points="12,3 14.5,9.5 21,12 14.5,14.5 12,21 9.5,14.5 3,12 9.5,9.5" fill="#ff4757" />
+        </svg>
+      </div>
+      <span class="text-xl font-bold tracking-tight text-slate-900 font-sans">
+        Wonder<span class="text-[#ff4757]">Lust</span>
+      </span>
+    </a>
+
+    <!-- Center Navigation Tabs -->
+    <div class="hidden lg:flex items-center gap-1 bg-slate-100/90 p-1 rounded-full border border-slate-200 shadow-inner">
+      <a href="/listings" class="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+        <i class="fa-solid fa-house text-xs text-slate-400"></i>
+        <span>Stays</span>
+      </a>
+      <a href="/experiences" class="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+        <i class="fa-solid fa-compass text-xs text-slate-400"></i>
+        <span>Experiences</span>
+      </a>
+      <a href="/destinations" class="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+        <i class="fa-solid fa-location-dot text-xs text-slate-400"></i>
+        <span>Destinations</span>
+      </a>
+      <a href="/gift-cards" class="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+        <i class="fa-solid fa-gift text-xs text-slate-400"></i>
+        <span>Gift Cards</span>
+      </a>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-3">
+      <a href="/experiences/host" class="hidden sm:inline-block text-xs font-semibold text-white bg-gradient-to-r from-[#ff4757] to-[#ff6b81] hover:brightness-105 px-4 py-2 rounded-full shadow-sm shadow-[#ff4757]/30 transition-all">
+        Host an Experience
+      </a>
+
+      <div class="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm cursor-pointer">
+        <i class="fa-solid fa-globe text-slate-500"></i>
+        <span>INR ₹</span>
+        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+      </div>
+
+      <!-- User Profile Trigger & Match Dropdown Card -->
+      <div class="relative" id="userMenuParent">
+        
+          
+          <!-- Authenticated Pill Button -->
+          <button id="userDropdownTrigger" type="button" class="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full bg-white hover:bg-slate-50 border border-slate-200 shadow-sm transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#ff4757]/30">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="User Avatar" class="w-8 h-8 rounded-full object-cover border border-slate-200" />
+            <i id="dropdownChevron" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200"></i>
+          </button>
+
+          <!-- EXACT UI REFERENCE DROPDOWN -->
+          <div id="userDropdownPanel" class="hidden absolute right-0 mt-3 w-72 bg-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,0.12)] border border-slate-100 py-4 px-3 z-50 transition-all duration-200 origin-top-right">
+            
+            <!-- User Profile Header -->
+            <div class="flex items-center gap-3 px-3 pb-3 mb-2 border-b border-slate-100">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="Test User" class="w-12 h-12 rounded-full object-cover border-2 border-slate-100 shadow-sm shrink-0" />
+              <div class="min-w-0">
+                <h4 class="text-sm font-bold text-slate-900 truncate leading-snug">Test User</h4>
+                <p class="text-xs text-slate-400 truncate leading-tight">savedcheck6850bf97@example.com</p>
+              </div>
+            </div>
+
+            <!-- Navigation Links List -->
+            <div class="space-y-1">
+              <a href="/profile" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-700 hover:text-[#ff4757] hover:bg-rose-50/70 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center text-slate-400 group-hover:text-[#ff4757]">
+                    <i class="fa-regular fa-user text-sm"></i>
+                  </div>
+                  <span>My Profile</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-[#ff4757]"></i>
+              </a>
+
+              <a href="/saved" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-700 hover:text-[#ff4757] hover:bg-rose-50/70 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center text-slate-400 group-hover:text-[#ff4757]">
+                    <i class="fa-regular fa-heart text-sm"></i>
+                  </div>
+                  <span>Saved</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-[#ff4757]"></i>
+              </a>
+
+              <a href="/bookings" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-700 hover:text-[#ff4757] hover:bg-rose-50/70 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center text-slate-400 group-hover:text-[#ff4757]">
+                    <i class="fa-regular fa-calendar-check text-sm"></i>
+                  </div>
+                  <span>My Bookings</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-[#ff4757]"></i>
+              </a>
+
+              <a href="/reviews" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-700 hover:text-[#ff4757] hover:bg-rose-50/70 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center text-slate-400 group-hover:text-[#ff4757]">
+                    <i class="fa-regular fa-star text-sm"></i>
+                  </div>
+                  <span>My Reviews</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-[#ff4757]"></i>
+              </a>
+
+              <a href="/settings" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-700 hover:text-[#ff4757] hover:bg-rose-50/70 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 flex justify-center text-slate-400 group-hover:text-[#ff4757]">
+                    <i class="fa-solid fa-gear text-sm"></i>
+                  </div>
+                  <span>Settings</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-[#ff4757]"></i>
+              </a>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t border-slate-100 my-2"></div>
+
+            <!-- Real Logout Handler -->
+            <a href="/logout" class="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold text-slate-700 hover:text-[#ff4757] hover:bg-rose-50/70 transition-all group">
+              <div class="w-5 flex justify-center text-slate-400 group-hover:text-[#ff4757]">
+                <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+              </div>
+              <span>Logout</span>
+            </a>
+
+          </div>
+        
+      </div>
+
+    </div>
+  </nav>
+</header>
+
+<script>
+  (function initProfileDropdown() {
+    const trigger = document.getElementById("userDropdownTrigger");
+    const panel = document.getElementById("userDropdownPanel");
+    const chevron = document.getElementById("dropdownChevron");
+    const parent = document.getElementById("userMenuParent");
+
+    if (!trigger || !panel) return;
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isHidden = panel.classList.toggle("hidden");
+      if (chevron) {
+        chevron.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (parent && !parent.contains(e.target)) {
+        panel.classList.add("hidden");
+        if (chevron) chevron.style.transform = "rotate(0deg)";
+      }
+    });
+  })();
+</script>
+
+  <!-- Main Body Content Injected Here -->
+  <main class="flex-grow">
+    
+
+<div class="relative w-full antialiased font-sans text-slate-800 bg-[#f8f9fb] min-h-screen pb-24">
+
+  <!-- ========================================== -->
+  <!-- 1. TOP HERO BANNER: Sunset Panorama        -->
+  <!-- ========================================== -->
+  <div class="relative w-full h-56 sm:h-64 overflow-hidden">
+    <img 
+      src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2000&q=85" 
+      alt="Santorini Coastal Sunset Panorama" 
+      class="w-full h-full object-cover object-center filter brightness-[0.92]"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#f8f9fb]"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-8 relative z-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Saved</h1>
+      <p class="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+        Your favorite stays, experiences and destinations — all in one place.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN CONTAINER & TOP PILL TABS STRIP    -->
+  <!-- ========================================== -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 space-y-10">
+    
+    <!-- Top Horizontal Filter Capsule Bar -->
+    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
+      <a href="#savedStaysSection" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-[#ff4757] bg-rose-50/70 border border-rose-100 transition-all text-decoration-none shrink-0">
+        <i class="fa-solid fa-house text-[11px]"></i>
+        <span>Saved Stays (<span id="topStaysCount">4</span>)</span>
+      </a>
+
+      <a href="#savedExpSection" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all text-decoration-none shrink-0">
+        <i class="fa-solid fa-compass text-[11px] text-slate-400"></i>
+        <span>Saved Experiences (<span id="topExpCount">3</span>)</span>
+      </a>
+
+      <a href="#savedDestSection" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all text-decoration-none shrink-0">
+        <i class="fa-solid fa-location-dot text-[11px] text-slate-400"></i>
+        <span>Saved Destinations (<span id="topDestCount">2</span>)</span>
+      </a>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: SAVED STAYS (4-COL GRID)        -->
+    <!-- ========================================== -->
+    <section id="savedStaysSection" class="space-y-4">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-[#ff4757] text-xs">
+            <i class="fa-solid fa-house"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900 leading-tight">
+              Saved Stays (<span id="staysHeadingCount">4</span>)
+            </h2>
+            <p class="text-[11px] text-slate-400">Stays you've saved for your next trip.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-end sm:self-auto">
+          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+            <span>Recently Saved</span>
+            <i class="fa-solid fa-chevron-down text-[8px] text-slate-400"></i>
+          </button>
+          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+            <i class="fa-solid fa-sliders text-[10px] text-slate-500"></i>
+            <span>Filter</span>
+          </button>
+          <a href="/listings" class="text-[11px] font-bold text-[#ff4757] hover:underline ml-1">View All (4) →</a>
+        </div>
+      </div>
+
+      <!-- 4 Cards Grid Loop -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+          
+          <div class="stay-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden transition-all hover:shadow-md" data-id="stay_01">
+            <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden">
+              <a href="/listings/stay_01" class="block w-full h-full">
+                <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Sunset Cliff Villa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </a>
+              <button 
+                type="button" 
+                onclick="handleLiveUnsave(this, 'stay_01', 'stay')" 
+                class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white text-[#ff4757] flex items-center justify-center shadow-md text-xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                title="Remove from saved"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+            <div class="p-3.5 space-y-1">
+              <div class="flex items-start justify-between">
+                <a href="/listings/stay_01" class="text-xs font-bold text-slate-900 truncate hover:text-[#ff4757] text-decoration-none">
+                  Sunset Cliff Villa
+                </a>
+                <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+              </div>
+              <p class="text-[10px] text-slate-500 flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-[9px] text-slate-400"></i>Oia, Santorini, Greece
+              </p>
+              <div class="flex items-center gap-1 text-[10px] text-slate-500">
+                <span class="text-amber-500 font-bold">★ 4.8</span>
+                <span>(320 reviews)</span>
+              </div>
+              <div class="pt-1 text-xs">
+                <span class="font-extrabold text-slate-900">₹12,500</span>
+                <span class="text-[10px] text-slate-400 font-normal">/ night</span>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="stay-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden transition-all hover:shadow-md" data-id="stay_02">
+            <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden">
+              <a href="/listings/stay_02" class="block w-full h-full">
+                <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Mountain View Cabin" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </a>
+              <button 
+                type="button" 
+                onclick="handleLiveUnsave(this, 'stay_02', 'stay')" 
+                class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white text-[#ff4757] flex items-center justify-center shadow-md text-xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                title="Remove from saved"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+            <div class="p-3.5 space-y-1">
+              <div class="flex items-start justify-between">
+                <a href="/listings/stay_02" class="text-xs font-bold text-slate-900 truncate hover:text-[#ff4757] text-decoration-none">
+                  Mountain View Cabin
+                </a>
+                <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+              </div>
+              <p class="text-[10px] text-slate-500 flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-[9px] text-slate-400"></i>Manali, India
+              </p>
+              <div class="flex items-center gap-1 text-[10px] text-slate-500">
+                <span class="text-amber-500 font-bold">★ 4.6</span>
+                <span>(112 reviews)</span>
+              </div>
+              <div class="pt-1 text-xs">
+                <span class="font-extrabold text-slate-900">₹6,800</span>
+                <span class="text-[10px] text-slate-400 font-normal">/ night</span>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="stay-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden transition-all hover:shadow-md" data-id="stay_03">
+            <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden">
+              <a href="/listings/stay_03" class="block w-full h-full">
+                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Riverside Retreat" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </a>
+              <button 
+                type="button" 
+                onclick="handleLiveUnsave(this, 'stay_03', 'stay')" 
+                class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white text-[#ff4757] flex items-center justify-center shadow-md text-xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                title="Remove from saved"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+            <div class="p-3.5 space-y-1">
+              <div class="flex items-start justify-between">
+                <a href="/listings/stay_03" class="text-xs font-bold text-slate-900 truncate hover:text-[#ff4757] text-decoration-none">
+                  Riverside Retreat
+                </a>
+                <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+              </div>
+              <p class="text-[10px] text-slate-500 flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-[9px] text-slate-400"></i>Goa, India
+              </p>
+              <div class="flex items-center gap-1 text-[10px] text-slate-500">
+                <span class="text-amber-500 font-bold">★ 4.7</span>
+                <span>(189 reviews)</span>
+              </div>
+              <div class="pt-1 text-xs">
+                <span class="font-extrabold text-slate-900">₹5,200</span>
+                <span class="text-[10px] text-slate-400 font-normal">/ night</span>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="stay-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden transition-all hover:shadow-md" data-id="stay_04">
+            <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden">
+              <a href="/listings/stay_04" class="block w-full h-full">
+                <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Desert Dome Stay" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </a>
+              <button 
+                type="button" 
+                onclick="handleLiveUnsave(this, 'stay_04', 'stay')" 
+                class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white text-[#ff4757] flex items-center justify-center shadow-md text-xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                title="Remove from saved"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+            <div class="p-3.5 space-y-1">
+              <div class="flex items-start justify-between">
+                <a href="/listings/stay_04" class="text-xs font-bold text-slate-900 truncate hover:text-[#ff4757] text-decoration-none">
+                  Desert Dome Stay
+                </a>
+                <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+              </div>
+              <p class="text-[10px] text-slate-500 flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-[9px] text-slate-400"></i>Jaisalmer, India
+              </p>
+              <div class="flex items-center gap-1 text-[10px] text-slate-500">
+                <span class="text-amber-500 font-bold">★ 4.5</span>
+                <span>(98 reviews)</span>
+              </div>
+              <div class="pt-1 text-xs">
+                <span class="font-extrabold text-slate-900">₹4,000</span>
+                <span class="text-[10px] text-slate-400 font-normal">/ night</span>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 2: SAVED EXPERIENCES (3-COL GRID)  -->
+    <!-- ========================================== -->
+    <section id="savedExpSection" class="space-y-4 pt-4">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-[#ff4757] text-xs">
+            <i class="fa-solid fa-compass"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900 leading-tight">
+              Saved Experiences (<span id="expHeadingCount">3</span>)
+            </h2>
+            <p class="text-[11px] text-slate-400">Experiences you've saved to try.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-end sm:self-auto">
+          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+            <span>Recently Saved</span>
+            <i class="fa-solid fa-chevron-down text-[8px] text-slate-400"></i>
+          </button>
+          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+            <i class="fa-solid fa-sliders text-[10px] text-slate-500"></i>
+            <span>Filter</span>
+          </button>
+          <a href="/experiences" class="text-[11px] font-bold text-[#ff4757] hover:underline ml-1">View All (3) →</a>
+        </div>
+      </div>
+
+      <!-- 3 Cards Grid Loop -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+          
+          <div class="exp-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden transition-all hover:shadow-md" data-id="exp_01">
+            <div class="relative w-full aspect-[16/10] bg-slate-100 overflow-hidden">
+              <a href="/experiences" class="block w-full h-full">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Hot Air Balloon Ride" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </a>
+              <button 
+                type="button" 
+                onclick="handleLiveUnsave(this, 'exp_01', 'experience')" 
+                class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white text-[#ff4757] flex items-center justify-center shadow-md text-xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                title="Remove from saved"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+            <div class="p-4 space-y-1.5">
+              <div class="flex items-start justify-between">
+                <h3 class="text-xs font-bold text-slate-900 truncate">Hot Air Balloon Ride</h3>
+                <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+              </div>
+              <p class="text-[10px] text-slate-500 flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-[9px] text-slate-400"></i>Cappadocia, Turkey
+              </p>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1">
+                <div class="flex items-center gap-1">
+                  <span class="text-amber-500 font-bold">★ 4.9</span>
+                  <span>(412 reviews)</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px] text-slate-500">
+                  <span><i class="fa-regular fa-clock mr-1 text-[9px]"></i>2–3 hours</span>
+                  <span>•</span>
+                  <span><i class="fa-solid fa-users mr-1 text-[9px]"></i>Group tour</span>
+                </div>
+              </div>
+              <div class="pt-2 text-xs">
+                <span class="font-extrabold text-slate-900">₹15,000</span>
+                <span class="text-[10px] text-slate-400 font-normal">/ person</span>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="exp-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden transition-all hover:shadow-md" data-id="exp_02">
+            <div class="relative w-full aspect-[16/10] bg-slate-100 overflow-hidden">
+              <a href="/experiences" class="block w-full h-full">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Scuba Diving Experience" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </a>
+              <button 
+                type="button" 
+                onclick="handleLiveUnsave(this, 'exp_02', 'experience')" 
+                class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white text-[#ff4757] flex items-center justify-center shadow-md text-xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                title="Remove from saved"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+            <div class="p-4 space-y-1.5">
+              <div class="flex items-start justify-between">
+                <h3 class="text-xs font-bold text-slate-900 truncate">Scuba Diving Experience</h3>
+                <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+              </div>
+              <p class="text-[10px] text-slate-500 flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-[9px] text-slate-400"></i>Andaman, India
+              </p>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1">
+                <div class="flex items-center gap-1">
+                  <span class="text-amber-500 font-bold">★ 4.7</span>
+                  <span>(256 reviews)</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px] text-slate-500">
+                  <span><i class="fa-regular fa-clock mr-1 text-[9px]"></i>3–4 hours</span>
+                  <span>•</span>
+                  <span><i class="fa-solid fa-users mr-1 text-[9px]"></i>Group tour</span>
+                </div>
+              </div>
+              <div class="pt-2 text-xs">
+                <span class="font-extrabold text-slate-900">₹8,500</span>
+                <span class="text-[10px] text-slate-400 font-normal">/ person</span>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="exp-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden transition-all hover:shadow-md" data-id="exp_03">
+            <div class="relative w-full aspect-[16/10] bg-slate-100 overflow-hidden">
+              <a href="/experiences" class="block w-full h-full">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Street Food Walking Tour" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              </a>
+              <button 
+                type="button" 
+                onclick="handleLiveUnsave(this, 'exp_03', 'experience')" 
+                class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white text-[#ff4757] flex items-center justify-center shadow-md text-xs hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                title="Remove from saved"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+            <div class="p-4 space-y-1.5">
+              <div class="flex items-start justify-between">
+                <h3 class="text-xs font-bold text-slate-900 truncate">Street Food Walking Tour</h3>
+                <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+              </div>
+              <p class="text-[10px] text-slate-500 flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-[9px] text-slate-400"></i>Bangkok, Thailand
+              </p>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1">
+                <div class="flex items-center gap-1">
+                  <span class="text-amber-500 font-bold">★ 4.6</span>
+                  <span>(310 reviews)</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px] text-slate-500">
+                  <span><i class="fa-regular fa-clock mr-1 text-[9px]"></i>3 hours</span>
+                  <span>•</span>
+                  <span><i class="fa-solid fa-users mr-1 text-[9px]"></i>Group tour</span>
+                </div>
+              </div>
+              <div class="pt-2 text-xs">
+                <span class="font-extrabold text-slate-900">₹3,200</span>
+                <span class="text-[10px] text-slate-400 font-normal">/ person</span>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 3: SAVED DESTINATIONS (2-COL SPLIT)-->
+    <!-- ========================================== -->
+    <section id="savedDestSection" class="space-y-4 pt-4">
+      
+      <!-- Section Header -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-[#ff4757] text-xs">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900 leading-tight">
+              Saved Destinations (<span id="destHeadingCount">2</span>)
+            </h2>
+            <p class="text-[11px] text-slate-400">Destinations you've saved to explore.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-slate-700 hover:bg-slate-50 shadow-sm cursor-pointer">
+            <span>Recently Saved</span>
+            <i class="fa-solid fa-chevron-down text-[8px] text-slate-400"></i>
+          </button>
+          <a href="/destinations" class="text-[11px] font-bold text-[#ff4757] hover:underline ml-1">View All (2) →</a>
+        </div>
+      </div>
+
+      <!-- 2 Cards Horizontal Layout Loop -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+          
+          <div class="dest-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden flex flex-col sm:flex-row transition-all hover:shadow-md" data-id="dest_01">
+            <div class="w-full sm:w-2/5 aspect-[4/3] sm:aspect-auto bg-slate-100 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Santorini, Greece" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            </div>
+            <div class="w-full sm:w-3/5 p-4 sm:p-5 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <h3 class="text-xs font-bold text-slate-900">Santorini, Greece</h3>
+                  <div class="flex items-center gap-1">
+                    <button type="button" onclick="handleLiveUnsave(this, 'dest_01', 'destination')" class="w-6 h-6 rounded-full text-[#ff4757] flex items-center justify-center text-xs cursor-pointer">
+                      <i class="fa-solid fa-heart"></i>
+                    </button>
+                    <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+                  </div>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">White-washed buildings, stunning sunsets and breathtaking caldera views.</p>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <a href="/destinations" class="text-[11px] font-bold text-[#ff4757] hover:underline flex items-center gap-1">
+                  <span>View Destination</span>
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="dest-card group bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden flex flex-col sm:flex-row transition-all hover:shadow-md" data-id="dest_02">
+            <div class="w-full sm:w-2/5 aspect-[4/3] sm:aspect-auto bg-slate-100 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Manali, India" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            </div>
+            <div class="w-full sm:w-3/5 p-4 sm:p-5 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <h3 class="text-xs font-bold text-slate-900">Manali, India</h3>
+                  <div class="flex items-center gap-1">
+                    <button type="button" onclick="handleLiveUnsave(this, 'dest_02', 'destination')" class="w-6 h-6 rounded-full text-[#ff4757] flex items-center justify-center text-xs cursor-pointer">
+                      <i class="fa-solid fa-heart"></i>
+                    </button>
+                    <button class="text-slate-400 hover:text-slate-700 text-xs px-1 cursor-pointer">⋮</button>
+                  </div>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">Snowy mountains, adventure activities and peaceful landscapes.</p>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <a href="/destinations" class="text-[11px] font-bold text-[#ff4757] hover:underline flex items-center gap-1">
+                  <span>View Destination</span>
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+<!-- Real-time AJAX Unsave & Toast Script -->
+<script>
+  async function handleLiveUnsave(button, itemId, itemType) {
+    const icon = button.querySelector("i");
+    const card = button.closest(".stay-card") || button.closest(".exp-card") || button.closest(".dest-card");
+
+    // Client optimistic toggle
+    const isCurrentlySaved = icon.classList.contains("fa-solid");
+
+    try {
+      const res = await fetch("/api/saved/toggle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ itemId, itemType })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        if (!data.isSaved) {
+          icon.classList.remove("fa-solid", "text-[#ff4757]");
+          icon.classList.add("fa-regular", "text-slate-400");
+          if (card) card.style.opacity = "0.45";
+          showSavedToast("Item removed from your saved collection.");
+        } else {
+          icon.classList.remove("fa-regular", "text-slate-400");
+          icon.classList.add("fa-solid", "text-[#ff4757]");
+          if (card) card.style.opacity = "1";
+          showSavedToast("Saved back to your collection.");
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      // Fallback visual feedback
+      if (isCurrentlySaved) {
+        icon.classList.remove("fa-solid", "text-[#ff4757]");
+        icon.classList.add("fa-regular", "text-slate-400");
+        if (card) card.style.opacity = "0.45";
+        showSavedToast("Item removed from your saved collection.");
+      }
+    }
+  }
+
+  function showSavedToast(message) {
+    const existing = document.getElementById("savedDynamicToast");
+    if (existing) existing.remove();
+
+    const toast = document.createElement("div");
+    toast.id = "savedDynamicToast";
+    toast.className = "fixed top-24 left-1/2 transform -translate-x-1/2 z-[100] px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold backdrop-blur-md bg-emerald-600 text-white transition-all duration-300";
+    toast.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i><span>${message}</span>`;
+
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translate(-50%, -15px)";
+      setTimeout(() => toast.remove(), 350);
+    }, 3000);
+  }
+</script>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="w-full pt-14 pb-8 border-t border-slate-200 mt-16 text-slate-600 text-xs">
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+    
+    <div class="col-span-2">
+      <a href="/" class="flex items-center gap-2 mb-3 text-decoration-none">
+        <div class="w-7 h-7 rounded-full border border-[#ff4757] flex items-center justify-center p-0.5">
+          <svg viewBox="0 0 24 24" fill="none" class="w-full h-full text-[#ff4757]">
+            <polygon points="12,3 14.5,9.5 21,12 14.5,14.5 12,21 9.5,14.5 3,12 9.5,9.5" fill="#ff4757" />
+          </svg>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-slate-900">Wonder<span class="text-[#ff4757]">Lust</span></span>
+      </a>
+      <p class="text-slate-500 text-xs leading-relaxed max-w-sm mb-4">
+        Unique homes. Unforgettable experiences. All around the world.
+      </p>
+      
+      <div class="flex items-center gap-4 text-slate-500">
+        <a href="#" class="hover:text-slate-900 transition-colors"><i class="fa-brands fa-instagram text-base"></i></a>
+        <a href="#" class="hover:text-slate-900 transition-colors"><i class="fa-brands fa-facebook text-base"></i></a>
+        <a href="#" class="hover:text-slate-900 transition-colors"><i class="fa-brands fa-x-twitter text-base"></i></a>
+        <a href="#" class="hover:text-slate-900 transition-colors"><i class="fa-brands fa-linkedin text-base"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <h6 class="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-3">Explore</h6>
+      <ul class="space-y-2">
+        <li><a href="/listings" class="hover:text-slate-900 transition-colors">Stays</a></li>
+        <li><a href="/experiences" class="hover:text-slate-900 transition-colors">Experiences</a></li>
+        <li><a href="/destinations" class="hover:text-slate-900 transition-colors">Destinations</a></li>
+        <li><a href="/gift-cards" class="hover:text-slate-900 transition-colors">Gift cards</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h6 class="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-3">Host</h6>
+      <ul class="space-y-2">
+        <li><a href="/listings/new" class="hover:text-slate-900 transition-colors">List your home</a></li>
+        <li><a href="/listings/new" class="hover:text-slate-900 transition-colors">Host an experience</a></li>
+        <li><a href="#" class="hover:text-slate-900 transition-colors">Host resources</a></li>
+        <li><a href="#" class="hover:text-slate-900 transition-colors">Community</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h6 class="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-3">Support</h6>
+      <ul class="space-y-2">
+        <li><a href="#" class="hover:text-slate-900 transition-colors">Help Center</a></li>
+        <li><a href="#" class="hover:text-slate-900 transition-colors">Safety information</a></li>
+        <li><a href="#" class="hover:text-slate-900 transition-colors">Cancellation options</a></li>
+        <li><a href="#" class="hover:text-slate-900 transition-colors">Contact us</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+    <div>© 2026 WonderLust, Inc. All rights reserved.</div>
+    <div class="flex items-center gap-4">
+      <a href="#" class="hover:underline">Privacy</a>
+      <span>•</span>
+      <a href="#" class="hover:underline">Terms</a>
+      <span>•</span>
+      <a href="#" class="hover:underline">Sitemap</a>
+      <span>•</span>
+      <span class="font-semibold text-slate-700">🌐 India (INR ₹)</span>
+    </div>
+  </div>
+</footer>
+
+  <!-- Bootstrap / Helper Scripts if needed -->
+  <script src="/js/script.js"></script>
+</body>
+</html>
