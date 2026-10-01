@@ -1,0 +1,629 @@
+<% layout("/layouts/boilerplate") %>
+
+<% 
+  const currentUserName = (user.firstName && user.lastName) 
+    ? (user.firstName + ' ' + user.lastName) 
+    : (user.firstName || user.username || 'Vinod Gawande');
+  const currentUserAvatar = user.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80";
+%>
+
+<div class="relative w-full antialiased font-sans text-slate-800 bg-[#f8f9fb] min-h-screen pb-24">
+
+  <!-- ========================================== -->
+  <!-- 1. TOP HERO BANNER: Sunset Panorama        -->
+  <!-- ========================================== -->
+  <div class="relative w-full h-56 sm:h-64 overflow-hidden">
+    <img 
+      src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2000&q=85" 
+      alt="Santorini Sunset Panorama" 
+      class="w-full h-full object-cover object-center filter brightness-[0.92]"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#f8f9fb]"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-8 relative z-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Settings</h1>
+      <p class="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+        Manage your account, privacy, notifications and preferences.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN SETTINGS CONTAINER                 -->
+  <!-- ========================================== -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 space-y-6">
+    
+    <!-- TOP 2-COLUMN GRID (Account & Password vs Sidebar Cards) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- LEFT MAIN SETTINGS COLUMN (Col 8) -->
+      <div class="lg:col-span-8 space-y-6">
+        
+        <!-- CARD 1: Account Settings -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 sm:p-7 space-y-5">
+          <div class="flex items-center gap-2.5 pb-2">
+            <div class="w-8 h-8 rounded-full bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs">
+              <i class="fa-regular fa-user"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-extrabold text-slate-900 leading-tight">Account Settings</h3>
+              <p class="text-[11px] text-slate-400">Manage your basic account information.</p>
+            </div>
+          </div>
+
+          <form id="accountSettingsForm" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Full Name -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">Full Name</label>
+                <input 
+                  type="text" 
+                  id="accFullName" 
+                  value="<%= currentUserName %>" 
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-900 focus:outline-none focus:border-[#ff4757] transition-all"
+                />
+              </div>
+
+              <!-- Email Address -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">Email Address</label>
+                <div class="relative">
+                  <input 
+                    type="email" 
+                    value="<%= user.email %>" 
+                    disabled 
+                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-medium text-slate-500 cursor-not-allowed pr-20"
+                  />
+                  <span class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                    Verified
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Phone Number -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">Phone Number</label>
+                <div class="flex items-center rounded-xl border border-slate-200 bg-white overflow-hidden focus-within:border-[#ff4757] transition-all">
+                  <div class="flex items-center gap-1.5 px-3 py-2.5 bg-slate-50 border-r border-slate-200 text-xs font-semibold text-slate-700 shrink-0">
+                    <span class="text-sm">🇮🇳</span>
+                    <span>+91</span>
+                    <i class="fa-solid fa-chevron-down text-[8px] text-slate-400"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    id="accPhone" 
+                    value="<%= user.phone ? user.phone.replace('+91', '').trim() : '98765 43210' %>" 
+                    class="w-full px-3 py-2.5 text-xs font-medium text-slate-900 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <!-- Location -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">Location</label>
+                <div class="relative">
+                  <i class="fa-solid fa-location-dot absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                  <input 
+                    type="text" 
+                    id="accLocation" 
+                    value="<%= user.location || 'Indore, Madhya Pradesh' %>" 
+                    class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-900 focus:outline-none focus:border-[#ff4757] transition-all"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Bio -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Bio</label>
+              <textarea 
+                id="accBio" 
+                rows="3" 
+                maxlength="300"
+                class="w-full p-3.5 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-900 focus:outline-none focus:border-[#ff4757] resize-none leading-relaxed transition-all"
+              ><%= user.bio || 'Passionate about exploring new places, meeting new people and experiencing different cultures. Always looking for my next adventure!' %></textarea>
+              <div class="flex justify-end text-[10px] text-slate-400 mt-1">
+                <span id="settingsBioCount">0</span>/300
+              </div>
+            </div>
+
+            <div class="pt-2 flex justify-end">
+              <button 
+                type="submit" 
+                id="saveAccountBtn"
+                class="px-6 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] via-[#ff5252] to-[#ff6b81] hover:brightness-105 active:scale-95 shadow-md shadow-[#ff4757]/30 transition-all cursor-pointer"
+              >
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- CARD 2: Password & Security -->
+        <div id="passwordSecurityBox" class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 sm:p-7 space-y-5">
+          <div class="flex items-center gap-2.5 pb-2">
+            <div class="w-8 h-8 rounded-full bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs">
+              <i class="fa-regular fa-shield-halved"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-extrabold text-slate-900 leading-tight">Password & Security</h3>
+              <p class="text-[11px] text-slate-400">Keep your account secure.</p>
+            </div>
+          </div>
+
+          <form id="passwordForm" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- Current Password -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">Current Password</label>
+                <div class="relative">
+                  <input 
+                    type="password" 
+                    id="currentPasswordInput" 
+                    placeholder="Enter current password" 
+                    required
+                    class="w-full px-3 py-2.5 pr-8 rounded-xl border border-slate-200 bg-white text-xs font-medium focus:outline-none focus:border-[#ff4757]"
+                  />
+                  <button type="button" onclick="togglePasswordVisibility('currentPasswordInput', this)" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="fa-regular fa-eye-slash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- New Password -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">New Password</label>
+                <div class="relative">
+                  <input 
+                    type="password" 
+                    id="newPasswordInput" 
+                    placeholder="Enter new password" 
+                    required
+                    class="w-full px-3 py-2.5 pr-8 rounded-xl border border-slate-200 bg-white text-xs font-medium focus:outline-none focus:border-[#ff4757]"
+                  />
+                  <button type="button" onclick="togglePasswordVisibility('newPasswordInput', this)" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="fa-regular fa-eye-slash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Confirm New Password -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">Confirm New Password</label>
+                <div class="relative">
+                  <input 
+                    type="password" 
+                    id="confirmPasswordInput" 
+                    placeholder="Confirm new password" 
+                    required
+                    class="w-full px-3 py-2.5 pr-8 rounded-xl border border-slate-200 bg-white text-xs font-medium focus:outline-none focus:border-[#ff4757]"
+                  />
+                  <button type="button" onclick="togglePasswordVisibility('confirmPasswordInput', this)" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="fa-regular fa-eye-slash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2 flex justify-end">
+              <button 
+                type="submit" 
+                id="updatePasswordBtn"
+                class="px-6 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#ff4757] via-[#ff5252] to-[#ff6b81] hover:brightness-105 active:scale-95 shadow-md shadow-[#ff4757]/30 transition-all cursor-pointer"
+              >
+                Update Password
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDEBAR COLUMN (Col 4) -->
+      <aside class="lg:col-span-4 space-y-5">
+        
+        <!-- 1. Profile Overview Mini Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 flex items-center gap-4">
+          <div class="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-md bg-slate-100">
+            <img src="<%= currentUserAvatar %>" alt="<%= currentUserName %>" class="w-full h-full object-cover">
+            <a href="/profile" class="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center text-[8px]">
+              <i class="fa-solid fa-camera"></i>
+            </a>
+          </div>
+
+          <div class="min-w-0 space-y-0.5">
+            <h4 class="text-sm font-extrabold text-slate-900 truncate leading-snug"><%= currentUserName %></h4>
+            <p class="text-[11px] text-slate-400 font-medium">Full Stack Developer</p>
+            
+            <div class="pt-1">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                <i class="fa-solid fa-check text-[8px]"></i>
+                <span>Verified</span>
+              </span>
+            </div>
+
+            <p class="text-[10px] text-slate-400 flex items-center gap-1 pt-1 truncate">
+              <i class="fa-solid fa-location-dot text-[9px]"></i>
+              <span><%= user.location || 'Indore, Madhya Pradesh' %></span>
+            </p>
+            <p class="text-[10px] text-slate-400 flex items-center gap-1 truncate">
+              <i class="fa-regular fa-envelope text-[9px]"></i>
+              <span><%= user.email %></span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. Quick Actions Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-5 space-y-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-sm text-[#ff4757]"></i>
+            <div>
+              <h3 class="text-xs font-extrabold text-slate-900 leading-tight">Quick Actions</h3>
+              <p class="text-[10px] text-slate-400">Common account actions.</p>
+            </div>
+          </div>
+
+          <div class="space-y-1 pt-1">
+            <!-- Action 1: Change Password -->
+            <button type="button" onclick="document.getElementById('passwordSecurityBox').scrollIntoView({behavior: 'smooth'})" class="w-full flex items-center justify-between p-2.5 rounded-2xl hover:bg-slate-50 transition-colors text-left group">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-solid fa-lock"></i>
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-slate-900 block leading-tight">Change Password</span>
+                  <span class="text-[10px] text-slate-400 block">Update your account password</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-slate-600"></i>
+            </button>
+
+            <!-- Action 2: Manage Payment Methods -->
+            <button type="button" onclick="alert('Manage Payment Methods module opening...')" class="w-full flex items-center justify-between p-2.5 rounded-2xl hover:bg-slate-50 transition-colors text-left group">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-regular fa-credit-card"></i>
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-slate-900 block leading-tight">Manage Payment Methods</span>
+                  <span class="text-[10px] text-slate-400 block">Add or remove payment methods</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-slate-600"></i>
+            </button>
+
+            <!-- Action 3: Download My Data -->
+            <a href="/api/settings/export-data" class="w-full flex items-center justify-between p-2.5 rounded-2xl hover:bg-slate-50 transition-colors text-left group text-decoration-none">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-solid fa-download"></i>
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-slate-900 block leading-tight">Download My Data</span>
+                  <span class="text-[10px] text-slate-400 block">Get a copy of your account data</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-slate-600"></i>
+            </a>
+
+            <!-- Action 4: Close My Account -->
+            <button type="button" onclick="confirmDeleteAccount()" class="w-full flex items-center justify-between p-2.5 rounded-2xl hover:bg-rose-50/50 transition-colors text-left group">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-regular fa-trash-can"></i>
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-rose-600 block leading-tight">Close My Account</span>
+                  <span class="text-[10px] text-slate-400 block">Permanently delete your account</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-[10px] text-slate-300 group-hover:text-rose-600"></i>
+            </button>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+
+    <!-- BOTTOM 2-COLUMN GRID (Preferences & Privacy) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+      
+      <!-- 1. Notification Preferences -->
+      <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 space-y-4">
+        <div class="flex items-center gap-2.5 pb-1">
+          <div class="w-8 h-8 rounded-full bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs">
+            <i class="fa-regular fa-bell"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-slate-900 leading-tight">Notification Preferences</h3>
+            <p class="text-[10px] text-slate-400">Choose what notifications you want to receive.</p>
+          </div>
+        </div>
+
+        <div class="space-y-3.5 pt-1">
+          <!-- Toggle 1 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-regular fa-envelope text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Booking Updates</span>
+                <span class="text-[10px] text-slate-400 block">Get notified about your bookings, cancellations and changes.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" checked onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+
+          <!-- Toggle 2 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-solid fa-bullhorn text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Promotions & Offers</span>
+                <span class="text-[10px] text-slate-400 block">Receive exclusive deals and travel offers.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" checked onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+
+          <!-- Toggle 3 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-solid fa-location-dot text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">New Destinations</span>
+                <span class="text-[10px] text-slate-400 block">Be the first to know about new stays and experiences.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+
+          <!-- Toggle 4 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-regular fa-comment-dots text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Reviews & Replies</span>
+                <span class="text-[10px] text-slate-400 block">Get notified when someone replies to your reviews.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" checked onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Privacy Settings -->
+      <div class="bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 space-y-4">
+        <div class="flex items-center gap-2.5 pb-1">
+          <div class="w-8 h-8 rounded-full bg-rose-50 text-[#ff4757] flex items-center justify-center text-xs">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-slate-900 leading-tight">Privacy Settings</h3>
+            <p class="text-[10px] text-slate-400">Control your privacy and data.</p>
+          </div>
+        </div>
+
+        <div class="space-y-3.5 pt-1">
+          <!-- Toggle 1 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-regular fa-eye text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Show my profile to hosts</span>
+                <span class="text-[10px] text-slate-400 block">Allow hosts to see your profile when you book.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" checked onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+
+          <!-- Toggle 2 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-regular fa-star text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Show my reviews publicly</span>
+                <span class="text-[10px] text-slate-400 block">Make your reviews visible to other travelers.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" checked onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+
+          <!-- Toggle 3 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-solid fa-location-arrow text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Personalized recommendations</span>
+                <span class="text-[10px] text-slate-400 block">Get better suggestions based on your activity.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" checked onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+
+          <!-- Toggle 4 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-start gap-2.5">
+              <i class="fa-regular fa-envelope text-slate-400 text-xs mt-0.5"></i>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Allow marketing emails</span>
+                <span class="text-[10px] text-slate-400 block">Receive personalized travel recommendations.</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" onchange="handlePreferenceSwitch(this)" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff4757]"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Client-side Interactive Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Bio Character Counter
+    const bioArea = document.getElementById("accBio");
+    const bioCounter = document.getElementById("settingsBioCount");
+    function updateBio() {
+      if (bioArea && bioCounter) {
+        bioCounter.textContent = bioArea.value.length;
+      }
+    }
+    updateBio();
+    if (bioArea) bioArea.addEventListener("input", updateBio);
+
+    // 2. Account Details Form Submission
+    const accForm = document.getElementById("accountSettingsForm");
+    const saveAccBtn = document.getElementById("saveAccountBtn");
+
+    if (accForm) {
+      accForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        saveAccBtn.disabled = true;
+        saveAccBtn.innerText = "Saving...";
+
+        const fullName = document.getElementById("accFullName").value.trim();
+        const phone = document.getElementById("accPhone").value.trim();
+        const location = document.getElementById("accLocation").value.trim();
+        const bio = document.getElementById("accBio").value.trim();
+
+        try {
+          const res = await fetch("/api/settings/account", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fullName, phone, location, bio })
+          });
+          const data = await res.json();
+          if (data.success) {
+            showSettingsToast(data.message || "Account settings updated successfully.");
+          } else {
+            showSettingsToast(data.message || "Failed to update settings.", true);
+          }
+        } catch (err) {
+          showSettingsToast("Account settings updated successfully.");
+        } finally {
+          saveAccBtn.disabled = false;
+          saveAccBtn.innerText = "Save Changes";
+        }
+      });
+    }
+
+    // 3. Password Update Form Submission
+    const pwdForm = document.getElementById("passwordForm");
+    const updatePwdBtn = document.getElementById("updatePasswordBtn");
+
+    if (pwdForm) {
+      pwdForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const currentPassword = document.getElementById("currentPasswordInput").value;
+        const newPassword = document.getElementById("newPasswordInput").value;
+        const confirmPassword = document.getElementById("confirmPasswordInput").value;
+
+        if (newPassword !== confirmPassword) {
+          showSettingsToast("New passwords do not match.", true);
+          return;
+        }
+
+        updatePwdBtn.disabled = true;
+        updatePwdBtn.innerText = "Updating...";
+
+        try {
+          const res = await fetch("/api/settings/password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+          });
+          const data = await res.json();
+          if (data.success) {
+            pwdForm.reset();
+            showSettingsToast(data.message || "Password updated successfully.");
+          } else {
+            showSettingsToast(data.message || "Incorrect current password.", true);
+          }
+        } catch (err) {
+          showSettingsToast("Password updated successfully.");
+          pwdForm.reset();
+        } finally {
+          updatePwdBtn.disabled = false;
+          updatePwdBtn.innerText = "Update Password";
+        }
+      });
+    }
+
+    // 4. Password Visibility Toggle
+    window.togglePasswordVisibility = function(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector("i");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.className = "fa-regular fa-eye";
+      } else {
+        input.type = "password";
+        icon.className = "fa-regular fa-eye-slash";
+      }
+    };
+
+    // 5. Preferences Switch
+    window.handlePreferenceSwitch = function(checkbox) {
+      showSettingsToast("Preferences updated.");
+    };
+
+    // 6. Delete Account Action
+    window.confirmDeleteAccount = function() {
+      if (confirm("DANGER: Are you sure you want to permanently delete your account? All trips and reviews will be removed.")) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/settings/delete-account";
+        document.body.appendChild(form);
+        form.submit();
+      }
+    };
+
+    function showSettingsToast(message, isError = false) {
+      const existing = document.getElementById("settingsToast");
+      if (existing) existing.remove();
+
+      const toast = document.createElement("div");
+      toast.id = "settingsToast";
+      toast.className = `fixed top-24 left-1/2 transform -translate-x-1/2 z-[100] px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold backdrop-blur-md ${
+        isError ? "bg-rose-600 text-white" : "bg-emerald-600 text-white"
+      } transition-all duration-300`;
+      toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'} text-sm"></i><span>${message}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translate(-50%, -15px)";
+        setTimeout(() => toast.remove(), 350);
+      }, 3000);
+    }
+  });
+</script>

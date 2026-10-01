@@ -1,61 +1,81 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
-// Handle both CommonJS & ES Module default exports safely
-const plm = require("passport-local-mongoose");
-const passportLocalMongoose = plm.default || plm;
+const passportLocalMongoose = require("passport-local-mongoose");
+const localPassportPlugin = passportLocalMongoose.default || passportLocalMongoose;
 
 const userSchema = new Schema({
-    firstName: {
-        type: String,
-        trim: true,
-        default: ""
-    },
-    lastName: {
-        type: String,
-        trim: true,
-        default: ""
-    },
     email: {
         type: String,
         required: true,
         unique: true,
-        trim: true,
-        lowercase: true
     },
-    // Login audit tracking
+    firstName: {
+        type: String,
+        default: "",
+    },
+    lastName: {
+        type: String,
+        default: "",
+    },
+    phone: {
+        type: String,
+        default: "+91 98765 43210",
+    },
+    location: {
+        type: String,
+        default: "Indore, Madhya Pradesh",
+    },
+    bio: {
+        type: String,
+        default: "Passionate about exploring new places, meeting new people and experiencing different cultures. Always looking for my next adventure!",
+        maxlength: 300,
+    },
+    avatar: {
+        type: String,
+        default: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    },
+    isEmailVerified: {
+        type: Boolean,
+        default: true,
+    },
+    accountStatus: {
+        type: String,
+        default: "Active",
+    },
+    wishlist: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Listing",
+        }
+    ],
+    savedExperiences: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Experience",
+        }
+    ],
+    savedDestinations: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Destination",
+        }
+    ],
+    preferences: {
+        language: { type: String, default: "English (US)" },
+        currency: { type: String, default: "INR (₹)" },
+        notifications: { type: Boolean, default: true },
+        personalizedRecs: { type: Boolean, default: true },
+    },
     lastLogin: {
         type: Date,
-        default: null
-    },
-    loginCount: {
-        type: Number,
-        default: 0
-    },
-    lastLoginIp: {
-        type: String,
-        default: null
-    },
-    // Forgot Password & Reset Tracking
-    resetPasswordToken: {
-        type: String,
-        default: null
-    },
-    resetPasswordExpires: {
-        type: Date,
-        default: null
-    },
-    lastPasswordReset: {
-        type: Date,
-        default: null
+        default: Date.now,
     },
     createdAt: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
-// Plugin seamlessly attach ho jayega
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(localPassportPlugin);
 
-module.exports = mongoose.model("User", userSchema); 
+module.exports = mongoose.model("User", userSchema);

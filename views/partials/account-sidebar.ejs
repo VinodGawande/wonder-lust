@@ -1,0 +1,69 @@
+<% const currentAccountTab = (typeof activeAccountTab !== 'undefined') ? activeAccountTab : 'profile'; %>
+
+<aside class="w-full bg-white rounded-3xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-3 space-y-1" data-account-sidebar>
+  <!-- My Profile -->
+  <a href="/profile" data-account-tab="profile" class="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-bold transition-all text-decoration-none <%= currentAccountTab === 'profile' ? 'text-[#ff4757] bg-rose-50/70 border border-rose-100' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' %>">
+    <i class="fa-regular fa-user text-sm <%= currentAccountTab === 'profile' ? 'text-[#ff4757]' : 'text-slate-400' %>"></i>
+    <span>My Profile</span>
+  </a>
+
+  <!-- Saved -->
+  <a href="/saved" data-account-tab="saved" class="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition-all text-decoration-none <%= currentAccountTab === 'saved' ? 'text-[#ff4757] bg-rose-50/70 border border-rose-100' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' %>">
+    <i class="fa-regular fa-heart text-sm <%= currentAccountTab === 'saved' ? 'text-[#ff4757]' : 'text-slate-400' %>"></i>
+    <span>Saved</span>
+  </a>
+
+  <!-- My Bookings -->
+  <a href="/bookings" data-account-tab="bookings" class="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition-all text-decoration-none <%= currentAccountTab === 'bookings' ? 'text-[#ff4757] bg-rose-50/70 border border-rose-100' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' %>">
+    <i class="fa-regular fa-calendar-check text-sm <%= currentAccountTab === 'bookings' ? 'text-[#ff4757]' : 'text-slate-400' %>"></i>
+    <span>My Bookings</span>
+  </a>
+
+  <!-- My Reviews -->
+  <a href="/reviews" data-account-tab="reviews" class="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition-all text-decoration-none <%= currentAccountTab === 'reviews' ? 'text-[#ff4757] bg-rose-50/70 border border-rose-100' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' %>">
+    <i class="fa-regular fa-star text-sm <%= currentAccountTab === 'reviews' ? 'text-[#ff4757]' : 'text-slate-400' %>"></i>
+    <span>My Reviews</span>
+  </a>
+
+  <!-- Settings -->
+  <a href="/settings" data-account-tab="settings" class="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition-all text-decoration-none <%= currentAccountTab === 'settings' ? 'text-[#ff4757] bg-rose-50/70 border border-rose-100' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' %>">
+    <i class="fa-solid fa-gear text-sm <%= currentAccountTab === 'settings' ? 'text-[#ff4757]' : 'text-slate-400' %>"></i>
+    <span>Settings</span>
+  </a>
+
+  <div class="border-t border-slate-100 my-2"></div>
+
+  <!-- Logout -->
+  <a href="/logout" class="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-bold text-slate-600 hover:text-[#ff4757] hover:bg-rose-50/50 transition-all text-decoration-none">
+    <i class="fa-solid fa-arrow-right-from-bracket text-sm text-slate-400"></i>
+    <span>Logout</span>
+  </a>
+</aside>
+
+<script>
+  (function syncAccountSidebar() {
+    const currentPath = window.location.pathname;
+    const sidebar = document.querySelector('[data-account-sidebar]');
+    if (!sidebar) return;
+
+    const activeTab = sidebar.querySelector(`[href="${currentPath}"]`);
+    if (!activeTab) return;
+
+    sidebar.querySelectorAll('[data-account-tab]').forEach(link => {
+      const isActive = link === activeTab;
+      link.classList.toggle('text-[#ff4757]', isActive);
+      link.classList.toggle('bg-rose-50/70', isActive);
+      link.classList.toggle('border', isActive);
+      link.classList.toggle('border-rose-100', isActive);
+      link.classList.toggle('text-slate-600', !isActive);
+      link.classList.toggle('hover:text-slate-900', !isActive);
+      link.classList.toggle('hover:bg-slate-50', !isActive);
+
+      const icon = link.querySelector('i');
+      if (icon) {
+        icon.classList.toggle('text-[#ff4757]', isActive);
+        icon.classList.toggle('text-slate-400', !isActive);
+      }
+    });
+  })();
+</script>
